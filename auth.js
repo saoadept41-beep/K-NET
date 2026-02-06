@@ -3,49 +3,68 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-const errorBox = document.getElementById("error-message");
+import {
+  ref,
+  set
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-document.getElementById("loginTab").onclick = () => {
+/* === UI === */
+const sphere = document.getElementById("sphere");
+const mainScreen = document.getElementById("main-screen");
+const authPanel = document.getElementById("auth-panel");
+
+sphere.addEventListener("click", () => {
+  mainScreen.classList.add("hidden");
+  authPanel.classList.add("show");
+});
+
+/* Tabs */
+loginTab.onclick = () => {
+  loginTab.classList.add("active");
+  registerTab.classList.remove("active");
   loginForm.classList.remove("hidden");
   registerForm.classList.add("hidden");
 };
 
-document.getElementById("registerTab").onclick = () => {
+registerTab.onclick = () => {
+  registerTab.classList.add("active");
+  loginTab.classList.remove("active");
   registerForm.classList.remove("hidden");
   loginForm.classList.add("hidden");
 };
 
-loginForm.onsubmit = e => {
+/* Login */
+loginForm.addEventListener("submit", e => {
   e.preventDefault();
-
   signInWithEmailAndPassword(
     auth,
     loginEmail.value,
     loginPassword.value
-  )
-  .then(() => location.href = "dashboard.html")
-  .catch(err => errorBox.textContent = err.message);
-};
+  ).then(() => {
+    window.location.href = "dashboard.html";
+  }).catch(err => {
+    errorMessage.textContent = err.message;
+  });
+});
 
-registerForm.onsubmit = e => {
+/* Register */
+registerForm.addEventListener("submit", e => {
   e.preventDefault();
-
   createUserWithEmailAndPassword(
     auth,
     regEmail.value,
     regPassword.value
-  )
-  .then(user => {
-    set(ref(db, "users/" + user.user.uid), {
+  ).then(user => {
+    return set(ref(db, "users/" + user.user.uid), {
       email: regEmail.value,
       role: role.value
     });
-    location.href = "dashboard.html";
-  })
-  .catch(err => errorBox.textContent = err.message);
-};
+  }).then(() => {
+    window.location.href = "dashboard.html";
+  }).catch(err => {
+    errorMessage.textContent = err.message;
+  });
+});
+
 
