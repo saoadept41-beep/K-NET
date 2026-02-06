@@ -548,5 +548,34 @@ html, body {
     
     .auth-container {
         padding: 30px 25px;
+        .hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.2);
+}
+
+#auth-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#auth-panel.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#sphere {
+  cursor: pointer;
+  z-index: 10;
+  position: relative;
+}
+
     }
+
 }
