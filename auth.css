@@ -1,4 +1,4 @@
-/* ========== ПЕРЕМЕННЫЕ ========== */
+/* ========== БАЗОВЫЕ СТИЛИ ========== */
 :root {
   --neon-blue: #00d4ff;
   --neon-purple: #b44aff;
@@ -7,7 +7,6 @@
   --darker-bg: #050510;
 }
 
-/* ========== RESET ========== */
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +22,7 @@ html, body {
   overflow: hidden;
 }
 
-/* ========== MAIN SCREEN ========== */
+/* ========== ГЛАВНЫЙ ЭКРАН ========== */
 #main-screen {
   position: fixed;
   inset: 0;
@@ -32,59 +31,35 @@ html, body {
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: all 1s ease;
+  transition: all 0.8s ease;
 }
 
 #main-screen.hidden {
   opacity: 0;
-  transform: scale(1.4);
+  transform: scale(1.3);
   pointer-events: none;
 }
 
-/* ========== SPHERE ========== */
+/* ========== СФЕРА ========== */
 #sphere {
-  position: relative;
-  width: 280px;
-  height: 280px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
   cursor: pointer;
-  z-index: 10;
+  position: relative;
+  z-index: 20;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(0,212,255,.4), transparent 60%),
+    linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+  box-shadow:
+    0 0 40px rgba(0,212,255,.8),
+    0 0 80px rgba(180,74,255,.6);
+  transition: transform .4s ease;
 }
 
 #sphere:hover {
-  transform: scale(1.05);
-}
-
-.sphere-glow {
-  position: absolute;
-  inset: -40px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(0,212,255,.3),
-    rgba(180,74,255,.2),
-    transparent 70%
-  );
-  filter: blur(25px);
-  animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: .7 }
-  50% { transform: scale(1.05); opacity: 1 }
-  100% { transform: scale(1); opacity: .7 }
-}
-
-.sphere-inner {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(135deg,
-    rgba(0,212,255,.4),
-    rgba(180,74,255,.4),
-    rgba(255,45,149,.3)
-  );
-  box-shadow:
-    inset 0 0 60px rgba(0,212,255,.4),
-    0 0 60px rgba(0,212,255,.6);
+  transform: scale(1.08);
 }
 
 .sphere-core {
@@ -99,7 +74,7 @@ html, body {
 #logo {
   font-size: 3rem;
   font-weight: 900;
-  background: linear-gradient(135deg,var(--neon-blue),var(--neon-purple),var(--neon-pink));
+  background: linear-gradient(135deg, #fff, var(--neon-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -108,33 +83,34 @@ html, body {
   font-size: .7rem;
   letter-spacing: 6px;
   opacity: .6;
+  margin-top: 8px;
 }
 
-/* ========== HINT ========== */
 .hint {
   margin-top: 50px;
   font-size: .8rem;
   opacity: .4;
+  letter-spacing: 4px;
   animation: blink 2s infinite;
 }
 
 @keyframes blink {
-  0%,100% { opacity:.3 }
-  50% { opacity:.7 }
+  0%,100% {opacity:.3}
+  50% {opacity:.7}
 }
 
 /* ========== AUTH PANEL ========== */
 #auth-panel {
   position: fixed;
   inset: 0;
-  background: rgba(5,5,16,.95);
+  background: rgba(0,0,0,.9);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: .4s;
-  z-index: 100;
+  transition: opacity .4s ease;
+  z-index: 50;
 }
 
 #auth-panel.show {
@@ -142,23 +118,22 @@ html, body {
   pointer-events: auto;
 }
 
-/* ========== AUTH BOX ========== */
 .auth-container {
-  width: min(90vw,400px);
-  padding: 40px;
-  border-radius: 24px;
+  width: 360px;
+  padding: 35px;
+  border-radius: 22px;
   background: linear-gradient(135deg,
-    rgba(10,10,30,.95),
-    rgba(20,10,40,.95)
+    rgba(15,15,40,.95),
+    rgba(30,15,60,.95)
   );
-  box-shadow: 0 0 80px rgba(0,0,0,.8);
+  box-shadow: 0 0 60px rgba(0,0,0,.8);
 }
 
-/* ========== TABS ========== */
+/* ========== ТАБЫ ========== */
 .tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .tab {
@@ -172,14 +147,11 @@ html, body {
 }
 
 .tab.active {
-  background: linear-gradient(135deg,
-    rgba(0,212,255,.3),
-    rgba(180,74,255,.3)
-  );
-  color: white;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  color: #fff;
 }
 
-/* ========== FORMS ========== */
+/* ========== ФОРМЫ ========== */
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -190,44 +162,40 @@ html, body {
   display: none;
 }
 
-.auth-form input,
-.auth-form select {
+input, select {
   padding: 14px;
   border-radius: 12px;
-  background: rgba(255,255,255,.05);
   border: none;
+  background: rgba(255,255,255,.07);
   color: white;
   outline: none;
 }
 
-.auth-form input:focus,
-.auth-form select:focus {
+input:focus, select:focus {
   box-shadow: 0 0 0 2px var(--neon-blue);
 }
 
-/* ========== BUTTON ========== */
 .submit-btn {
   padding: 15px;
-  background: linear-gradient(135deg,var(--neon-blue),var(--neon-purple));
+  border-radius: 14px;
   border: none;
-  border-radius: 12px;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
   color: white;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  transition: transform .2s ease;
 }
 
 .submit-btn:hover {
-  box-shadow: 0 10px 30px rgba(0,212,255,.4);
+  transform: translateY(-2px);
 }
 
 /* ========== ERROR ========== */
 #error-message {
-  margin-top: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(255,45,95,.15);
-  border: 1px solid rgba(255,45,95,.4);
-  color: #ff6b8a;
+  margin-top: 15px;
+  color: #ff6b6b;
+  font-size: .85rem;
+  text-align: center;
   display: none;
 }
 
@@ -235,8 +203,8 @@ html, body {
   display: block;
 }
 
-/* ========== ADAPTIVE ========== */
-@media (max-width:600px) {
+/* ========== АДАПТИВ ========== */
+@media (max-width: 600px) {
   #sphere {
     width: 200px;
     height: 200px;
@@ -247,8 +215,11 @@ html, body {
   }
 
   .auth-container {
-    padding: 30px 25px;
+    width: 90%;
+    padding: 28px;
   }
 }
+
+
 
 
