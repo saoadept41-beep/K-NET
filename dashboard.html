@@ -1,32 +1,30 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>K-NET • Dashboard</title>
-
-  <link rel="stylesheet" href="app.css">
-  <link rel="stylesheet" href="chat.css">
+  <link rel="stylesheet" href="./css/chat.css">
 </head>
-
 <body>
 
-<header>
-  <h1>K-NET • Tableau de bord</h1>
-</header>
+<div class="sidebar">
+  <button data-chat="global">🌍 Общий</button>
+  <button data-chat="role">👤 Роль</button>
+  <button data-chat="admin">🛡 Админ</button>
+</div>
 
-<main id="chat">
+<div class="chat">
   <div id="messages"></div>
-
-  <form id="chatForm">
-    <input id="messageInput" placeholder="Écrire un message..." autocomplete="off">
-    <button>Envoyer</button>
+  <form id="sendForm">
+    <input id="text">
+    <button>➤</button>
   </form>
-</main>
+</div>
 
-<script type="module" src="firebase.js"></script>
-<script type="module" src="dashboard.js"></script>
-
+<script type="module" src="./js/dashboard.js"></script>
 </body>
 </html>
+
+
 
 
