@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>K-NET • Dashboard</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+<div id="sidebar">
+  <h2>K-NET</h2>
+  <button data-chat="global">🌍 Общий чат</button>
+  <button data-chat="role">🧠 Чат роли</button>
+  <button data-chat="admin">🔐 Админ чат</button>
+  <button id="profileBtn">👤 Профиль</button>
+</div>
+
+<div id="chat">
+  <div id="messages"></div>
+  <form id="sendForm">
+    <input id="messageInput" placeholder="Сообщение">
+    <button>➤</button>
+  </form>
+</div>
+
+<script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
