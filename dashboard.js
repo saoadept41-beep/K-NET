@@ -1,47 +1,39 @@
 import { auth, db } from "./firebase.js";
 import {
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  serverTimestamp
+  collection, addDoc, query, orderBy, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const form = document.getElementById("chatForm");
-const input = document.getElementById("messageInput");
-const messages = document.getElementById("messages");
+let currentChat = "global";
 
-const chatId = "global"; // позже сделаем роли
-
-const q = query(
-  collection(db, "chats", chatId, "messages"),
-  orderBy("createdAt")
-);
-
-onSnapshot(q, snapshot => {
-  messages.innerHTML = "";
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    const div = document.createElement("div");
-    div.className = "message";
-    div.innerHTML = `<span>${data.email}</span>: ${data.text}`;
-    messages.appendChild(div);
-  });
-  messages.scrollTop = messages.scrollHeight;
+document.querySelectorAll(".sidebar button").forEach(btn=>{
+  btn.onclick=()=>loadChat(btn.dataset.chat);
 });
 
-form.addEventListener("submit", async e => {
+function loadChat(name){
+  currentChat = name;
+  const q = query(
+    collection(db,"chats",name,"messages"),
+    orderBy("time")
+  );
+  onSnapshot(q,snap=>{
+    messages.innerHTML="";
+    snap.forEach(d=>{
+      messages.innerHTML += `<div>${d.data().text}</div>`;
+    });
+  });
+}
+
+sendForm.onsubmit = async e=>{
   e.preventDefault();
-  if (!input.value.trim()) return;
-
-  await addDoc(collection(db, "chats", chatId, "messages"), {
-    text: input.value,
-    email: auth.currentUser.email,
-    createdAt: serverTimestamp()
+  await addDoc(collection(db,"chats",currentChat,"messages"),{
+    text: text.value,
+    time: Date.now()
   });
+  text.value="";
+};
 
-  input.value = "";
-});
+loadChat("global");
+
+
 
 
