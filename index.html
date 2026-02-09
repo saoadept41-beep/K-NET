@@ -1,66 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>K-NET • Neural Gate</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="./css/app.css">
-  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body>
 
+<!-- ГЛАВНЫЙ ЭКРАН -->
 <div id="main-screen">
   <div id="sphere">
     <div class="sphere-core">
-      <div id="logo">K-NET</div>
+      <div class="logo">K-NET</div>
       <div class="subtitle">NEURAL GATE</div>
     </div>
   </div>
   <div class="hint">CLIQUEZ POUR ENTRER</div>
 </div>
 
+<!-- АВТОРИЗАЦИЯ -->
 <div id="auth-panel">
-  <div class="auth-container">
-
-    <div class="tabs">
-      <button class="tab active" id="loginTab">Connexion</button>
-      <button class="tab" id="registerTab">Inscription</button>
-    </div>
-
-    <form id="loginForm" class="auth-form">
-      <input id="loginEmail" placeholder="Email" required>
-      <input id="loginPassword" type="password" placeholder="Mot de passe" required>
-      <button class="submit-btn">Se connecter</button>
-    </form>
-
-    <form id="registerForm" class="auth-form hidden">
-      <input id="regEmail" placeholder="Email" required>
-      <input id="regPassword" type="password" placeholder="Mot de passe" required>
-
-      <select id="role">
-        <option value="driver">Conducteur</option>
-        <option value="logistic">Logistique</option>
-        <option value="mechanic">Mécanicien</option>
-        <option value="organizer">Organisateur</option>
-        <option value="admin">Administrateur</option>
-      </select>
-
-      <button class="submit-btn">Créer un compte</button>
-    </form>
-
-    <div id="error-message"></div>
-
+  <div class="auth-box">
+    <h2>Connexion</h2>
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Mot de passe">
+    <button>Se connecter</button>
   </div>
 </div>
 
-<!-- JS -->
-<script type="module" src="./js/firebase.js"></script>
-<script type="module" src="./js/auth.js"></script>
-
+<script src="js/auth.js"></script>
 </body>
 </html>
+
 
 
 
