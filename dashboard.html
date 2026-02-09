@@ -3,15 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>K-NET • Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/chat.css">
 </head>
+
 <body>
-<h1>Bienvenue sur K-NET</h1>
-<p>Le chat arrive à l’étape suivante 🚀</p>
+
+<header>
+  <h1>K-NET</h1>
+  <span id="roleLabel"></span>
+</header>
+
+<section id="chat">
+  <div id="messages"></div>
+
+  <form id="chatForm">
+    <input id="messageInput" placeholder="Votre message…">
+    <button>Envoyer</button>
+  </form>
+</section>
 
 <script type="module" src="js/dashboard.js"></script>
+<script type="module" src="js/chat.js"></script>
 </body>
 </html>
-
 
 
 
