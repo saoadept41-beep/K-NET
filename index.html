@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <title>K-NET • Neural Gate</title>
 
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/auth.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/auth.css">
 </head>
 
 <body>
@@ -28,25 +29,35 @@
       <button class="tab" id="registerTab">Inscription</button>
     </div>
 
-    <form id="loginForm">
-      <input id="loginEmail" placeholder="Email">
-      <input id="loginPassword" type="password" placeholder="Mot de passe">
-      <button>Se connecter</button>
+    <form id="loginForm" class="auth-form">
+      <input id="loginEmail" placeholder="Email" required>
+      <input id="loginPassword" type="password" placeholder="Mot de passe" required>
+      <button class="submit-btn">Se connecter</button>
     </form>
 
-    <form id="registerForm" class="hidden">
-      <input id="regEmail" placeholder="Email">
-      <input id="regPassword" type="password" placeholder="Mot de passe">
-      <button>Créer un compte</button>
+    <form id="registerForm" class="auth-form hidden">
+      <input id="regEmail" placeholder="Email" required>
+      <input id="regPassword" type="password" placeholder="Mot de passe" required>
+
+      <select id="role">
+        <option value="driver">Conducteur</option>
+        <option value="logistic">Logistique</option>
+        <option value="mechanic">Mécanicien</option>
+        <option value="organizer">Organisateur</option>
+        <option value="admin">Administrateur</option>
+      </select>
+
+      <button class="submit-btn">Créer un compte</button>
     </form>
 
-    <div id="error"></div>
+    <div id="error-message"></div>
 
   </div>
 </div>
 
-<script type="module" src="js/firebase.js"></script>
-<script type="module" src="js/auth.js"></script>
+<!-- JS -->
+<script type="module" src="./js/firebase.js"></script>
+<script type="module" src="./js/auth.js"></script>
 
 </body>
 </html>
