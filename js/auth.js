@@ -1,57 +1,39 @@
-import { auth, db } from "./firebase.js";
+import { auth } from "./firebase.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import {
-  doc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const sphere = document.getElementById("sphere");
-const main = document.getElementById("main-screen");
+const mainScreen = document.getElementById("main-screen");
 const authPanel = document.getElementById("auth-panel");
 
 sphere.addEventListener("click", () => {
-  main.classList.add("hidden");
-  setTimeout(() => authPanel.classList.add("show"), 600);
+  mainScreen.classList.add("hidden");
+  authPanel.classList.add("show");
 });
 
-/* LOGIN */
-loginForm.addEventListener("submit", async e => {
-  e.preventDefault();
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const role = document.getElementById("role");
+const error = document.getElementById("error");
+
+document.getElementById("loginBtn").onclick = async () => {
   try {
-    await signInWithEmailAndPassword(
-      auth,
-      loginEmail.value,
-      loginPassword.value
-    );
-    window.location.href = "dashboard.html";
-  } catch (err) {
-    error.innerText = err.message;
+    await signInWithEmailAndPassword(auth, email.value, password.value);
+    window.location.href = "./dashboard.html";
+  } catch (e) {
+    error.textContent = e.message;
   }
-});
+};
 
-/* REGISTER */
-registerForm.addEventListener("submit", async e => {
-  e.preventDefault();
+document.getElementById("registerBtn").onclick = async () => {
   try {
-    const cred = await createUserWithEmailAndPassword(
-      auth,
-      regEmail.value,
-      regPassword.value
-    );
-
-    await setDoc(doc(db, "users", cred.user.uid), {
-      email: regEmail.value,
-      role: role.value,
-      createdAt: Date.now()
-    });
-
-    window.location.href = "dashboard.html";
-  } catch (err) {
-    error.innerText = err.message;
+    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    window.location.href = "./dashboard.html";
+  } catch (e) {
+    error.textContent = e.message;
   }
-});
+};
 
 
