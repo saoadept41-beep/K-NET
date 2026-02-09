@@ -1,49 +1,38 @@
 #auth-panel {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(0,0,0,.85);
   display: flex;
-  justify-content: center;
   align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: .6s;
-}
-
-#auth-panel.show {
-  opacity: 1;
-  pointer-events: auto;
+  justify-content: center;
 }
 
 .auth-box {
-  width: 360px;
+  background: rgba(20,30,80,.9);
   padding: 30px;
-  background: rgba(20,20,40,.9);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 0 80px rgba(0,212,255,.4);
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 0 60px rgba(100,140,255,.4);
+}
+
+.auth-box h2 {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .auth-box input,
 .auth-box select,
 .auth-box button {
   width: 100%;
-  margin-bottom: 15px;
-  padding: 14px;
-  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 10px;
   border: none;
-}
-
-.auth-box input,
-.auth-box select {
-  background: rgba(255,255,255,.1);
-  color: white;
+  border-radius: 6px;
 }
 
 .auth-box button {
-  background: linear-gradient(90deg,#00d4ff,#6366f1);
+  background: linear-gradient(90deg,#4f6bff,#6f8bff);
   color: white;
-  font-weight: bold;
   cursor: pointer;
 }
 
