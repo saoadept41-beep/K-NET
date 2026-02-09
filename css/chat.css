@@ -1,87 +1,72 @@
-html, body {
+body {
   margin: 0;
-  height: 100%;
-  background: radial-gradient(circle at top, #050514, #000);
-  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  display: flex;
+  background: linear-gradient(120deg,#020412,#050a2a);
   color: white;
+  font-family: Segoe UI;
 }
 
-.chat-app {
+.layout { display: flex; width: 100%; }
+
+.channels {
+  width: 220px;
+  background: rgba(10,20,60,.9);
+  padding: 10px;
+}
+
+.channel {
+  padding: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.channel.active {
+  background: #4f6bff;
+}
+
+.chat {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
-.chat-header {
-  padding: 20px;
-  background: rgba(20,20,40,.8);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 0 40px rgba(0,212,255,.4);
-}
-
-.logo {
-  font-size: 1.8rem;
-  font-weight: 900;
-  background: linear-gradient(90deg,#00d4ff,#6366f1);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.subtitle {
-  font-size: .7rem;
-  letter-spacing: 4px;
-  opacity: .6;
-}
-
-.chat-messages {
+#messages {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
 }
 
 .message {
-  max-width: 60%;
-  padding: 14px 18px;
-  margin-bottom: 14px;
-  border-radius: 16px;
-  animation: pop .4s ease;
-  background: rgba(255,255,255,.08);
-  box-shadow: 0 0 20px rgba(0,212,255,.2);
+  margin-bottom: 10px;
+  animation: pop .3s ease;
 }
 
-.message.me {
-  margin-left: auto;
-  background: linear-gradient(135deg,#00d4ff,#6366f1);
+.input {
+  display: flex;
+  padding: 10px;
+  background: rgba(0,0,0,.6);
+}
+
+.input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.input button {
+  margin-left: 10px;
+  padding: 10px 16px;
+  background: #4f6bff;
+  border: none;
+  color: white;
 }
 
 @keyframes pop {
-  from { transform: translateY(10px) scale(.9); opacity:0 }
-  to { transform: translateY(0) scale(1); opacity:1 }
+  from { transform: translateY(10px); opacity: 0 }
+  to { transform: none; opacity: 1 }
 }
 
-.chat-input {
-  display: flex;
-  padding: 15px;
-  background: rgba(10,10,30,.9);
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 14px;
-  border-radius: 14px;
-  border: none;
-  background: rgba(255,255,255,.1);
-  color: white;
-}
-
-.chat-input button {
-  margin-left: 10px;
-  width: 60px;
-  border-radius: 14px;
-  border: none;
-  font-size: 1.2rem;
-  background: linear-gradient(135deg,#00d4ff,#6366f1);
-  color: white;
-  cursor: pointer;
-}
 
