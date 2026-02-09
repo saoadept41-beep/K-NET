@@ -1,18 +1,19 @@
 #auth-panel {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.85);
+  background: rgba(0,0,0,.9);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 20;
 }
 
 .auth-box {
-  background: rgba(20,30,80,.9);
+  background: #020617;
   padding: 30px;
   border-radius: 12px;
-  width: 320px;
-  box-shadow: 0 0 60px rgba(100,140,255,.4);
+  width: 300px;
+  box-shadow: 0 0 40px rgba(59,130,246,.4);
 }
 
 .auth-box h2 {
@@ -24,16 +25,23 @@
 .auth-box select,
 .auth-box button {
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   padding: 10px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
 }
 
 .auth-box button {
-  background: linear-gradient(90deg,#4f6bff,#6f8bff);
+  background: #3b82f6;
   color: white;
   cursor: pointer;
+}
+
+#error {
+  margin-top: 10px;
+  color: #f87171;
+  font-size: 12px;
+  text-align: center;
 }
 
 
