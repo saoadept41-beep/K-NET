@@ -4,27 +4,36 @@ import {
   addDoc,
   query,
   orderBy,
-  onSnapshot
+  onSnapshot,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-const messages = document.getElementById("messages");
+const messagesDiv = document.getElementById("messages");
+const input = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
 
-const q = query(collection(db, "chat"), orderBy("time"));
+const q = query(collection(db, "messages"), orderBy("createdAt"));
 
-onSnapshot(q, snap => {
-  messages.innerHTML = "";
-  snap.forEach(doc => {
-    const d = doc.data();
-    messages.innerHTML += `<div class="msg"><b>${d.user}</b>: ${d.text}</div>`;
+onSnapshot(q, snapshot => {
+  messagesDiv.innerHTML = "";
+  snapshot.forEach(doc => {
+    const msg = doc.data();
+    const div = document.createElement("div");
+    div.className = "message" + (msg.uid === auth.currentUser?.uid ? " me" : "");
+    div.textContent = msg.text;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
 });
 
-chatForm.addEventListener("submit", async e => {
-  e.preventDefault();
-  await addDoc(collection(db, "chat"), {
-    text: messageInput.value,
-    user: auth.currentUser.email,
-    time: Date.now()
+sendBtn.onclick = async () => {
+  if (!input.value.trim()) return;
+
+  await addDoc(collection(db, "messages"), {
+    text: input.value,
+    uid: auth.currentUser.uid,
+    createdAt: serverTimestamp()
   });
-  messageInput.value = "";
-});
+
+  input.value = "";
+};
