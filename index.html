@@ -1,42 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>K-NET • Neural Gate</title>
+<meta charset="UTF-8">
+<title>K-NET • Login</title>
 
-  <!-- СТИЛИ -->
-  <link rel="stylesheet" href="./css/app.css">
-  <link rel="stylesheet" href="./css/auth.css">
+<link rel="stylesheet" href="./css/app.css">
+<link rel="stylesheet" href="./css/auth.css">
 </head>
 
 <body>
 
-<!-- ФОН -->
-<div class="scan-line"></div>
-
-<!-- ГЛАВНЫЙ ЭКРАН -->
 <div id="main-screen">
-
-  <!-- ОРБИТЫ -->
-  <div class="orbit orbit-1"></div>
-  <div class="orbit orbit-2"></div>
-  <div class="orbit orbit-3"></div>
-
-  <!-- СФЕРА -->
   <div id="sphere">
-    <div class="sphere-glow"></div>
-    <div class="sphere-inner"></div>
-
     <div class="sphere-core">
       <div id="logo">K-NET</div>
       <div class="subtitle">NEURAL GATE</div>
     </div>
   </div>
-
   <div class="hint">CLICK TO ENTER</div>
 </div>
 
-<!-- АВТОРИЗАЦИЯ -->
 <div id="auth-panel">
   <div class="auth-container">
 
@@ -46,13 +29,13 @@
     </div>
 
     <form id="loginForm" class="auth-form">
-      <input id="loginEmail" type="email" placeholder="Email" required>
+      <input id="loginEmail" placeholder="Email" required>
       <input id="loginPassword" type="password" placeholder="Password" required>
-      <button class="submit-btn" type="submit">Login</button>
+      <button class="submit-btn">Login</button>
     </form>
 
     <form id="registerForm" class="auth-form hidden">
-      <input id="regEmail" type="email" placeholder="Email" required>
+      <input id="regEmail" placeholder="Email" required>
       <input id="regPassword" type="password" placeholder="Password" required>
 
       <select id="role">
@@ -60,22 +43,23 @@
         <option value="logistic">Логист</option>
         <option value="mechanic">Механик</option>
         <option value="organizer">Организатор</option>
-        <option value="admin">Администратор</option>
+        <option value="admin">Админ</option>
       </select>
 
-      <button class="submit-btn" type="submit">Register</button>
+      <button class="submit-btn">Register</button>
     </form>
 
     <div id="error-message"></div>
+
   </div>
 </div>
 
-<!-- JS -->
 <script type="module" src="./js/firebase.js"></script>
 <script type="module" src="./js/auth.js"></script>
-
 </body>
 </html>
+
+
 
 
 
