@@ -1,99 +1,57 @@
-// ===== FIREBASE =====
 import { auth, db } from "./firebase.js";
-
 import {
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
+  createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
 import {
   doc,
-  setDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-
-// ===== UI ELEMENTS =====
 const sphere = document.getElementById("sphere");
-const mainScreen = document.getElementById("main-screen");
+const main = document.getElementById("main-screen");
 const authPanel = document.getElementById("auth-panel");
 
-const loginTab = document.getElementById("loginTab");
-const registerTab = document.getElementById("registerTab");
-
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-
-const errorBox = document.getElementById("error-message");
-
-
-// ===== ОТКРЫТЬ АВТОРИЗАЦИЮ =====
 sphere.addEventListener("click", () => {
-  mainScreen.classList.add("hidden");
-  authPanel.classList.add("show");
+  main.classList.add("hidden");
+  setTimeout(() => authPanel.classList.add("show"), 600);
 });
 
-
-// ===== ТАБЫ =====
-loginTab.addEventListener("click", () => {
-  loginTab.classList.add("active");
-  registerTab.classList.remove("active");
-  loginForm.classList.remove("hidden");
-  registerForm.classList.add("hidden");
-});
-
-registerTab.addEventListener("click", () => {
-  registerTab.classList.add("active");
-  loginTab.classList.remove("active");
-  registerForm.classList.remove("hidden");
-  loginForm.classList.add("hidden");
-});
-
-
-// ===== LOGIN =====
-loginForm.addEventListener("submit", async (e) => {
+/* LOGIN */
+loginForm.addEventListener("submit", async e => {
   e.preventDefault();
-  errorBox.style.display = "none";
-
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
-
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(
+      auth,
+      loginEmail.value,
+      loginPassword.value
+    );
     window.location.href = "dashboard.html";
   } catch (err) {
-    showError(err.message);
+    error.innerText = err.message;
   }
 });
 
-
-// ===== REGISTER =====
-registerForm.addEventListener("submit", async (e) => {
+/* REGISTER */
+registerForm.addEventListener("submit", async e => {
   e.preventDefault();
-  errorBox.style.display = "none";
-
-  const email = document.getElementById("regEmail").value;
-  const password = document.getElementById("regPassword").value;
-  const role = document.getElementById("role").value;
-
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const cred = await createUserWithEmailAndPassword(
+      auth,
+      regEmail.value,
+      regPassword.value
+    );
 
-    // сохраняем профиль
     await setDoc(doc(db, "users", cred.user.uid), {
-      email,
-      role,
-      createdAt: new Date(),
+      email: regEmail.value,
+      role: role.value,
+      createdAt: Date.now()
     });
 
     window.location.href = "dashboard.html";
   } catch (err) {
-    showError(err.message);
+    error.innerText = err.message;
   }
 });
 
 
-// ===== ERROR =====
-function showError(text) {
-  errorBox.textContent = text;
-  errorBox.style.display = "block";
-}
