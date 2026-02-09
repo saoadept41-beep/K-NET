@@ -1,21 +1,26 @@
-html, body {
+* {
   margin: 0;
-  height: 100%;
-  font-family: 'Segoe UI', sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
   background: radial-gradient(circle at top, #0a0f2c, #000);
   color: white;
+  height: 100vh;
   overflow: hidden;
 }
 
-.hidden { display: none; }
-
 #boot-screen {
-  position: absolute;
+  position: fixed;
   inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 10;
+  cursor: pointer;
 }
 
 .core {
@@ -23,10 +28,9 @@ html, body {
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  background: radial-gradient(circle, #4f6bff, #1b1f5e);
-  box-shadow: 0 0 80px #4f6bff;
+  background: radial-gradient(circle, #3b82f6, #020617);
+  box-shadow: 0 0 60px #3b82f6;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   animation: pulse 3s infinite;
@@ -34,36 +38,38 @@ html, body {
 
 .ring {
   position: absolute;
-  inset: -20px;
+  inset: -15px;
   border-radius: 50%;
-  border: 2px dashed rgba(120,140,255,.4);
-  animation: spin 10s linear infinite;
+  border: 2px solid rgba(255,255,255,.2);
+  animation: spin 6s linear infinite;
 }
 
 .logo {
-  font-size: 42px;
+  font-size: 32px;
   font-weight: bold;
 }
 
 .subtitle {
+  position: absolute;
+  bottom: -40px;
   font-size: 12px;
   opacity: .7;
 }
 
 .enter {
-  margin-top: 40px;
+  margin-top: 60px;
   opacity: .6;
-  cursor: pointer;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 40px #4f6bff; }
-  50% { box-shadow: 0 0 120px #6f8bff; }
-  100% { box-shadow: 0 0 40px #4f6bff; }
+.hidden {
+  display: none;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 40px #3b82f6; }
+  50% { box-shadow: 0 0 80px #60a5fa; }
+}
