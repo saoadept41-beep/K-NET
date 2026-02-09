@@ -2,31 +2,33 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>K-NET • Dashboard</title>
-  <link rel="stylesheet" href="css/dashboard.css">
-  <link rel="stylesheet" href="css/chat.css">
+  <title>K-NET • Chat</title>
+
+  <link rel="stylesheet" href="./css/chat.css">
 </head>
 
 <body>
 
-<header>
-  <h1>K-NET</h1>
-  <span id="roleLabel"></span>
-</header>
+<div class="chat-app">
 
-<section id="chat">
-  <div id="messages"></div>
+  <header class="chat-header">
+    <div class="logo">K-NET</div>
+    <div class="subtitle">Réseau Neural</div>
+  </header>
 
-  <form id="chatForm">
-    <input id="messageInput" placeholder="Votre message…">
-    <button>Envoyer</button>
-  </form>
-</section>
+  <main id="messages" class="chat-messages"></main>
 
-<script type="module" src="js/dashboard.js"></script>
-<script type="module" src="js/chat.js"></script>
+  <footer class="chat-input">
+    <input id="messageInput" placeholder="Écrire un message..." />
+    <button id="sendBtn">➤</button>
+  </footer>
+
+</div>
+
+<script type="module" src="./js/chat.js"></script>
 </body>
 </html>
+
 
 
 
