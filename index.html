@@ -3,54 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>K-NET • Neural Gate</title>
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/auth.css">
+
+  <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/auth.css">
 </head>
 
 <body>
 
+<!-- MAIN SCREEN -->
 <div id="main-screen">
   <div id="sphere">
-    <div class="sphere-core">
-      <div class="logo">K-NET</div>
-      <div class="subtitle">NEURAL GATE</div>
+    <div class="sphere-glow"></div>
+    <div class="sphere-body">
+      <div class="sphere-title">K-NET</div>
+      <div class="sphere-sub">NEURAL GATE</div>
     </div>
   </div>
   <div class="hint">CLIQUEZ POUR ENTRER</div>
 </div>
 
+<!-- AUTH -->
 <div id="auth-panel">
   <div class="auth-box">
     <h2>Connexion</h2>
 
-    <form id="loginForm">
-      <input id="loginEmail" type="email" placeholder="Email" required>
-      <input id="loginPassword" type="password" placeholder="Mot de passe" required>
-      <button type="submit">Se connecter</button>
-    </form>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mot de passe">
 
-    <hr>
+    <select id="role">
+      <option value="driver">Conducteur</option>
+      <option value="logistic">Logistique</option>
+      <option value="mechanic">Mécanicien</option>
+      <option value="organizer">Organisateur</option>
+      <option value="admin">Administrateur</option>
+    </select>
 
-    <form id="registerForm">
-      <input id="regEmail" type="email" placeholder="Email" required>
-      <input id="regPassword" type="password" placeholder="Mot de passe" required>
+    <button id="loginBtn">Se connecter</button>
+    <button id="registerBtn">Créer un compte</button>
 
-      <select id="role">
-        <option value="driver">Conducteur</option>
-        <option value="logistic">Logistique</option>
-        <option value="mechanic">Mécanicien</option>
-        <option value="organizer">Organisateur</option>
-        <option value="admin">Administrateur</option>
-      </select>
-
-      <button type="submit">Créer un compte</button>
-    </form>
-
-    <div id="error"></div>
+    <p id="error"></p>
   </div>
 </div>
 
-<script type="module" src="js/auth.js"></script>
+<script type="module" src="./js/auth.js"></script>
 </body>
 </html>
 
