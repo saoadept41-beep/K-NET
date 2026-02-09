@@ -1,29 +1,26 @@
 body {
   margin: 0;
-  height: 100vh;
   display: flex;
-  background: linear-gradient(120deg,#020412,#050a2a);
+  height: 100vh;
+  background: #020617;
   color: white;
-  font-family: Segoe UI;
 }
 
-.layout { display: flex; width: 100%; }
-
-.channels {
+.sidebar {
   width: 220px;
-  background: rgba(10,20,60,.9);
-  padding: 10px;
+  background: #020617;
+  border-right: 1px solid #1e293b;
 }
 
 .channel {
-  padding: 10px;
-  margin-bottom: 6px;
+  padding: 15px;
   cursor: pointer;
-  border-radius: 6px;
+  transition: .3s;
 }
 
+.channel:hover,
 .channel.active {
-  background: #4f6bff;
+  background: rgba(59,130,246,.3);
 }
 
 .chat {
@@ -40,33 +37,28 @@ body {
 
 .message {
   margin-bottom: 10px;
-  animation: pop .3s ease;
+  animation: fade .3s;
 }
 
 .input {
   display: flex;
   padding: 10px;
-  background: rgba(0,0,0,.6);
+  border-top: 1px solid #1e293b;
 }
 
 .input input {
   flex: 1;
   padding: 10px;
-  border-radius: 6px;
-  border: none;
 }
 
 .input button {
-  margin-left: 10px;
-  padding: 10px 16px;
-  background: #4f6bff;
-  border: none;
+  background: #3b82f6;
   color: white;
+  border: none;
+  padding: 10px;
 }
 
-@keyframes pop {
-  from { transform: translateY(10px); opacity: 0 }
-  to { transform: none; opacity: 1 }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; }
 }
-
-
