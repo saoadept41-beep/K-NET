@@ -1,77 +1,69 @@
 html, body {
   margin: 0;
-  width: 100%;
   height: 100%;
-  background: radial-gradient(circle at top, #050514, #000);
   font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #0a0f2c, #000);
   color: white;
   overflow: hidden;
 }
 
-#main-screen {
-  position: fixed;
+.hidden { display: none; }
+
+#boot-screen {
+  position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  transition: 1s;
+  justify-content: center;
 }
 
-#main-screen.hidden {
-  opacity: 0;
-  transform: scale(1.5);
-  pointer-events: none;
-}
-
-#sphere {
-  width: 260px;
-  height: 260px;
+.core {
   position: relative;
-  cursor: pointer;
-}
-
-.sphere-glow {
-  position: absolute;
-  inset: -50px;
-  background: radial-gradient(circle, rgba(0,212,255,.5), transparent 70%);
-  filter: blur(50px);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #4f6bff, #1b1f5e);
+  box-shadow: 0 0 80px #4f6bff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   animation: pulse 3s infinite;
 }
 
-.sphere-body {
-  width: 100%;
-  height: 100%;
+.ring {
+  position: absolute;
+  inset: -20px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #1e3a8a, #3b82f6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset 0 0 40px rgba(255,255,255,.2),
-              0 0 80px rgba(59,130,246,.8);
+  border: 2px dashed rgba(120,140,255,.4);
+  animation: spin 10s linear infinite;
 }
 
-.sphere-title {
-  font-size: 3rem;
-  font-weight: 900;
+.logo {
+  font-size: 42px;
+  font-weight: bold;
 }
 
-.sphere-sub {
-  font-size: .7rem;
-  letter-spacing: 5px;
+.subtitle {
+  font-size: 12px;
   opacity: .7;
 }
 
-.hint {
+.enter {
   margin-top: 40px;
-  font-size: .75rem;
-  opacity: .5;
-  letter-spacing: 3px;
+  opacity: .6;
+  cursor: pointer;
 }
 
 @keyframes pulse {
-  0%,100% { transform: scale(1); opacity:.7 }
-  50% { transform: scale(1.1); opacity:1 }
+  0% { box-shadow: 0 0 40px #4f6bff; }
+  50% { box-shadow: 0 0 120px #6f8bff; }
+  100% { box-shadow: 0 0 40px #4f6bff; }
 }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 
