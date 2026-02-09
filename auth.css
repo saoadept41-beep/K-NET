@@ -1,17 +1,12 @@
-.hidden {
-  display: none;
-}
-
 #auth-panel {
   position: fixed;
   inset: 0;
-  background: rgba(5,5,16,0.95);
+  background: rgba(0,0,0,0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: .4s;
 }
 
 #auth-panel.show {
@@ -20,10 +15,10 @@
 }
 
 .auth-container {
-  width: 360px;
-  padding: 40px;
   background: #0a0a1a;
-  border-radius: 20px;
+  padding: 30px;
+  border-radius: 16px;
+  width: 320px;
 }
 
 .tabs {
@@ -35,15 +30,7 @@
 .tab {
   flex: 1;
   padding: 10px;
-  background: #111;
-  color: white;
-  border: none;
   cursor: pointer;
-  opacity: .5;
-}
-
-.tab.active {
-  opacity: 1;
 }
 
 .auth-form {
@@ -52,22 +39,8 @@
   gap: 15px;
 }
 
-.auth-form input,
-.auth-form select {
-  padding: 12px;
-  background: #111;
-  border: none;
-  border-radius: 10px;
-  color: white;
-}
-
-.submit-btn {
-  padding: 12px;
-  background: linear-gradient(135deg,#00d4ff,#b44aff);
-  border: none;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
+.hidden {
+  display: none;
 }
 
 
