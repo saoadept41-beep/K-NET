@@ -2,52 +2,42 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>K-NET • Neural Gate</title>
-
-  <link rel="stylesheet" href="./css/app.css">
-  <link rel="stylesheet" href="./css/auth.css">
+  <title>K-NET • Neural Interface</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
-
 <body>
 
-<!-- MAIN SCREEN -->
-<div id="main-screen">
-  <div id="sphere">
-    <div class="sphere-glow"></div>
-    <div class="sphere-body">
-      <div class="sphere-title">K-NET</div>
-      <div class="sphere-sub">NEURAL GATE</div>
-    </div>
+<div id="boot-screen">
+  <div class="core">
+    <div class="ring"></div>
+    <div class="logo">K-NET</div>
+    <div class="subtitle">Interface neuronale</div>
   </div>
-  <div class="hint">CLIQUEZ POUR ENTRER</div>
+  <div class="enter">CLIQUER POUR SE CONNECTER</div>
 </div>
 
-<!-- AUTH -->
-<div id="auth-panel">
+<div id="auth-panel" class="hidden">
   <div class="auth-box">
     <h2>Connexion</h2>
-
     <input id="email" type="email" placeholder="Email">
     <input id="password" type="password" placeholder="Mot de passe">
-
     <select id="role">
-      <option value="driver">Conducteur</option>
-      <option value="logistic">Logistique</option>
-      <option value="mechanic">Mécanicien</option>
-      <option value="organizer">Organisateur</option>
-      <option value="admin">Administrateur</option>
+      <option value="chauffeur">Chauffeur</option>
+      <option value="logistique">Logistique</option>
+      <option value="mecanicien">Mécanicien</option>
+      <option value="organisation">Organisation</option>
+      <option value="admin">Admin</option>
     </select>
-
-    <button id="loginBtn">Se connecter</button>
-    <button id="registerBtn">Créer un compte</button>
-
+    <button id="loginBtn">Entrer</button>
     <p id="error"></p>
   </div>
 </div>
 
-<script type="module" src="./js/auth.js"></script>
+<script type="module" src="js/auth.js"></script>
 </body>
 </html>
+
 
 
 
