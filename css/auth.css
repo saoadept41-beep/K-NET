@@ -1,0 +1,48 @@
+#auth-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#auth-panel.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.auth-container {
+  background: #0a0a1a;
+  padding: 30px;
+  border-radius: 16px;
+  width: 320px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+
