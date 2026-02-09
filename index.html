@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>K-NET • Neural Gate</title>
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
 
 <body>
 
-<!-- MAIN SCREEN -->
 <div id="main-screen">
   <div id="sphere">
     <div class="sphere-core">
-      <div id="logo">K-NET</div>
+      <div class="logo">K-NET</div>
       <div class="subtitle">NEURAL GATE</div>
     </div>
   </div>
   <div class="hint">CLIQUEZ POUR ENTRER</div>
 </div>
 
-<!-- AUTH PANEL -->
 <div id="auth-panel">
-  <div class="auth-container">
+  <div class="auth-box">
+    <h2>Connexion</h2>
 
-    <div class="tabs">
-      <button class="tab active" id="loginTab">Connexion</button>
-      <button class="tab" id="registerTab">Inscription</button>
-    </div>
-
-    <form id="loginForm" class="auth-form">
+    <form id="loginForm">
       <input id="loginEmail" type="email" placeholder="Email" required>
       <input id="loginPassword" type="password" placeholder="Mot de passe" required>
-      <button type="submit" class="submit-btn">Se connecter</button>
+      <button type="submit">Se connecter</button>
     </form>
 
-    <form id="registerForm" class="auth-form hidden">
+    <hr>
+
+    <form id="registerForm">
       <input id="regEmail" type="email" placeholder="Email" required>
       <input id="regPassword" type="password" placeholder="Mot de passe" required>
 
@@ -46,17 +43,16 @@
         <option value="admin">Administrateur</option>
       </select>
 
-      <button type="submit" class="submit-btn">Créer un compte</button>
+      <button type="submit">Créer un compte</button>
     </form>
 
-    <div id="error-message"></div>
-
+    <div id="error"></div>
   </div>
 </div>
 
-<!-- JS (ВАЖНО!) -->
 <script type="module" src="js/auth.js"></script>
-
 </body>
 </html>
+
+
 
