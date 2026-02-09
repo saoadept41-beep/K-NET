@@ -25,26 +25,28 @@
 }
 
 .auth-box input,
-.auth-box select {
+.auth-box select,
+.auth-box button {
   width: 100%;
   margin-bottom: 15px;
   padding: 14px;
-  background: rgba(255,255,255,.08);
-  border: none;
   border-radius: 10px;
+  border: none;
+}
+
+.auth-box input,
+.auth-box select {
+  background: rgba(255,255,255,.1);
   color: white;
 }
 
 .auth-box button {
-  width: 100%;
-  padding: 14px;
   background: linear-gradient(90deg,#00d4ff,#6366f1);
-  border: none;
-  border-radius: 12px;
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
+
 
 
 
