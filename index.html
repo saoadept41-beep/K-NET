@@ -2,86 +2,39 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-
-  <!-- ❗ ОБЯЗАТЕЛЬНО -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-NET • Neural Core</title>
 
-  <title>K-NET • Connexion</title>
+  <!-- ТВОЙ СТИЛЬ -->
   <link rel="stylesheet" href="css/auth.css">
 </head>
-
 <body>
 
-<div id="main-screen">
-  <div id="sphere">
-    <div class="sphere-core">
-      <div id="logo">K-NET</div>
-      <div class="subtitle">PORTE NEURALE</div>
-    </div>
+<!-- BOOT SCREEN -->
+<div id="boot-screen">
+  <div class="sphere">
+    <div class="core"></div>
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
   </div>
-  <div class="hint">CLIQUEZ POUR ENTRER</div>
+
+  <div id="system-text">
+    <span id="line1"></span><br>
+    <span id="line2"></span>
+  </div>
 </div>
 
-<div id="auth-panel">
-  <div class="auth-container">
-
-    <div class="tabs">
-      <button class="tab active" id="loginTab">Connexion</button>
-      <button class="tab" id="registerTab">Inscription</button>
-    </div>
-
-    <form id="loginForm" class="auth-form">
-      <div class="input-group">
-        <input id="loginEmail" required>
-        <label>Email</label>
-        <div class="input-line"></div>
-      </div>
-
-      <div class="input-group">
-        <input id="loginPassword" type="password" required>
-        <label>Mot de passe</label>
-        <div class="input-line"></div>
-      </div>
-
-      <button type="submit" class="submit-btn">
-        Connexion
-        <span class="btn-glow"></span>
-      </button>
-    </form>
-
-    <form id="registerForm" class="auth-form hidden">
-      <div class="input-group">
-        <input id="regEmail" required>
-        <label>Email</label>
-        <div class="input-line"></div>
-      </div>
-
-      <div class="input-group">
-        <input id="regPassword" type="password" required>
-        <label>Mot de passe</label>
-        <div class="input-line"></div>
-      </div>
-
-      <select id="role">
-        <option value="driver">Chauffeur</option>
-        <option value="logistic">Logisticien</option>
-        <option value="mechanic">Mécanicien</option>
-        <option value="organizer">Organisateur</option>
-      </select>
-
-      <button type="submit" class="submit-btn">
-        Inscription
-        <span class="btn-glow"></span>
-      </button>
-    </form>
-
-    <div id="error-message"></div>
-  </div>
+<!-- AUTH (ТВОЙ СУЩЕСТВУЮЩИЙ) -->
+<div id="auth-panel" class="hidden">
+  <!-- ⚠️ ОСТАВЬ ТУТ СВОЙ ТЕКУЩИЙ AUTH HTML -->
 </div>
 
 <script type="module" src="js/auth.js"></script>
 </body>
 </html>
+
+
 
 
 
