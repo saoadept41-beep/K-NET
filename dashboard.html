@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>K-NET • Dashboard</title>
-  <link rel="stylesheet" href="css/chat.css">
+<meta charset="UTF-8">
+<title>K-NET • Chat</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/chat.css">
 </head>
 
 <body>
 
-<div class="sidebar">
-  <div class="channel active" data-channel="general">🌐 Général</div>
-  <div class="channel" data-channel="driver">🚚 Chauffeurs</div>
-  <div class="channel" data-channel="logistic">📦 Logistique</div>
-  <div class="channel" data-channel="mechanic">🛠️ Mécaniciens</div>
-  <div class="channel" data-channel="organizer">🧠 Organisation</div>
-  <div class="channel" data-channel="admin">👑 Admin</div>
+<div id="sidebar">
+  <button data-chat="global">🌍 Global</button>
+  <button data-chat="role">🧠 Rôle</button>
+  <button data-chat="admin">🔐 Admin</button>
 </div>
 
-<div class="chat">
+<div id="chat">
   <div id="messages"></div>
-  <div class="input">
-    <input id="msg" placeholder="Message…">
-    <button id="send">Envoyer</button>
-  </div>
+  <form id="sendForm">
+    <input id="messageInput" placeholder="Écrire un message">
+    <button>➤</button>
+  </form>
 </div>
 
 <script type="module" src="js/chat.js"></script>
