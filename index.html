@@ -3,35 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-NET • Neural Core</title>
+  <title>K-NET • Connexion</title>
 
-  <link rel="stylesheet" href="css/core.css">
+  <!-- AUTH CSS -->
+  <link rel="stylesheet" href="css/auth.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top left, #6a00ff66, transparent 50%),
+        radial-gradient(circle at bottom right, #ff4fd866, transparent 50%),
+        linear-gradient(135deg, #050510, #0b0f2a);
+    }
+  </style>
 </head>
 <body>
 
-<div id="boot-screen">
+  <!-- ===== AUTH (КАК БЫЛО) ===== -->
+  <div class="auth-container">
+    <h1>K-NET</h1>
 
-  <div class="sphere">
-    <div class="core"></div>
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mot de passe">
+
+    <button id="loginBtn">Connexion</button>
+    <button id="registerBtn">Inscription</button>
+
+    <p id="authMessage"></p>
   </div>
 
-  <div id="system-text">
-    <span id="line1"></span><br>
-    <span id="line2"></span>
-  </div>
+  <!-- FIREBASE AUTH -->
+  <script type="module" src="js/auth.js"></script>
 
-</div>
-
-<div id="auth-panel" class="hidden">
-  <!-- ТВОЙ СУЩЕСТВУЮЩИЙ AUTH БЕЗ ИЗМЕНЕНИЙ -->
-</div>
-
-<script src="js/core.js"></script>
 </body>
 </html>
+
+
 
 
 
