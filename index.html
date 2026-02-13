@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>K-NET • Login</title>
+<title>K-NET • Connexion</title>
+
 <link rel="stylesheet" href="css/auth.css">
 </head>
 
@@ -12,37 +13,65 @@
   <div id="sphere">
     <div class="sphere-core">
       <div id="logo">K-NET</div>
-      <div class="subtitle">NEURAL GATE</div>
+      <div class="subtitle">PORTE NEURALE</div>
     </div>
   </div>
-  <div class="hint">CLICK TO ENTER</div>
+  <div class="hint">CLIQUEZ POUR ENTRER</div>
 </div>
 
 <div id="auth-panel">
   <div class="auth-container">
+
     <div class="tabs">
-      <button class="tab active" id="loginTab">Login</button>
-      <button class="tab" id="registerTab">Register</button>
+      <button class="tab active" id="loginTab">Connexion</button>
+      <button class="tab" id="registerTab">Inscription</button>
     </div>
 
+    <!-- LOGIN -->
     <form id="loginForm" class="auth-form">
-      <input id="loginEmail" placeholder="Email">
-      <input id="loginPassword" type="password" placeholder="Password">
-      <button type="submit" class="submit-btn">Login</button>
+      <div class="input-group">
+        <input id="loginEmail" required>
+        <label>Email</label>
+        <div class="input-line"></div>
+      </div>
+
+      <div class="input-group">
+        <input id="loginPassword" type="password" required>
+        <label>Mot de passe</label>
+        <div class="input-line"></div>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Connexion
+        <span class="btn-glow"></span>
+      </button>
     </form>
 
+    <!-- REGISTER -->
     <form id="registerForm" class="auth-form hidden">
-      <input id="regEmail" placeholder="Email">
-      <input id="regPassword" type="password" placeholder="Password">
+      <div class="input-group">
+        <input id="regEmail" required>
+        <label>Email</label>
+        <div class="input-line"></div>
+      </div>
+
+      <div class="input-group">
+        <input id="regPassword" type="password" required>
+        <label>Mot de passe</label>
+        <div class="input-line"></div>
+      </div>
 
       <select id="role">
-        <option value="driver">Водитель</option>
-        <option value="logistic">Логист</option>
-        <option value="mechanic">Механик</option>
-        <option value="organizer">Организатор</option>
+        <option value="driver">Chauffeur</option>
+        <option value="logistic">Logisticien</option>
+        <option value="mechanic">Mécanicien</option>
+        <option value="organizer">Organisateur</option>
       </select>
 
-      <button type="submit" class="submit-btn">Register</button>
+      <button type="submit" class="submit-btn">
+        Inscription
+        <span class="btn-glow"></span>
+      </button>
     </form>
 
     <div id="error-message"></div>
@@ -52,6 +81,7 @@
 <script type="module" src="js/auth.js"></script>
 </body>
 </html>
+
 
 
 
