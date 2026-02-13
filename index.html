@@ -5,34 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K-NET • Neural Core</title>
 
-  <!-- ТВОЙ СТИЛЬ -->
   <link rel="stylesheet" href="css/auth.css">
+
+  <style>
+    /* === BOOT SCREEN === */
+    #boot-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #0a0a2a, #050510);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .sphere {
+      position: relative;
+      width: 220px;
+      height: 220px;
+    }
+
+    .core {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00d4ff, #3a0ca3);
+      box-shadow: 0 0 60px #00d4ff;
+      animation: pulse 3s infinite;
+    }
+
+    .ring {
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 212, 255, 0.35);
+      animation: spin 14s linear infinite;
+    }
+
+    .r2 { inset: -35px; opacity: .5; animation-duration: 20s; }
+    .r3 { inset: -50px; opacity: .3; animation-duration: 28s; }
+
+    #system-text {
+      margin-top: 40px;
+      text-align: center;
+      font-size: .9rem;
+      letter-spacing: 2px;
+      opacity: .8;
+      color: white;
+      font-family: monospace;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden { display: none; }
+  </style>
 </head>
 <body>
 
-<!-- BOOT SCREEN -->
+<!-- BOOT -->
 <div id="boot-screen">
   <div class="sphere">
     <div class="core"></div>
-    <div class="ring r1"></div>
+    <div class="ring"></div>
     <div class="ring r2"></div>
     <div class="ring r3"></div>
   </div>
 
   <div id="system-text">
-    <span id="line1"></span><br>
-    <span id="line2"></span>
+    <div id="line1"></div>
+    <div id="line2"></div>
   </div>
 </div>
 
-<!-- AUTH (ТВОЙ СУЩЕСТВУЮЩИЙ) -->
+<!-- AUTH -->
 <div id="auth-panel" class="hidden">
-  <!-- ⚠️ ОСТАВЬ ТУТ СВОЙ ТЕКУЩИЙ AUTH HTML -->
+  <!-- 🔐 ВСТАВЬ СЮДА СВОЙ СТАРЫЙ AUTH HTML (БЕЗ ИЗМЕНЕНИЙ) -->
 </div>
 
+<!-- BOOT LOGIC (НЕ MODULE) -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const boot = document.getElementById("boot-screen");
+    const auth = document.getElementById("auth-panel");
+    const l1 = document.getElementById("line1");
+    const l2 = document.getElementById("line2");
+
+    if (!boot || !auth) return;
+
+    setTimeout(() => {
+      l1.textContent = "INITIALISATION…";
+    }, 600);
+
+    setTimeout(() => {
+      l2.textContent = "NEURAL CORE SYNCHRONISÉ";
+    }, 1400);
+
+    setTimeout(() => {
+      l1.textContent = "ACCÈS AUTORISÉ";
+      l2.textContent = "CLIQUEZ POUR ENTRER";
+      boot.dataset.ready = "true";
+    }, 2400);
+
+    boot.addEventListener("click", () => {
+      if (!boot.dataset.ready) return;
+
+      boot.style.transition = "opacity .8s ease, transform .8s ease";
+      boot.style.opacity = "0";
+      boot.style.transform = "scale(1.2)";
+
+      setTimeout(() => {
+        boot.remove();
+        auth.classList.remove("hidden");
+      }, 800);
+    });
+  });
+</script>
+
+<!-- 🔐 ТВОЙ FIREBASE AUTH -->
 <script type="module" src="js/auth.js"></script>
+
 </body>
 </html>
+
+
 
 
 
