@@ -1,64 +1,89 @@
+:root {
+  --blue: #00d4ff;
+  --purple: #b44aff;
+  --pink: #ff2d95;
+  --bg: #050510;
+}
+
 body {
   margin: 0;
-  display: flex;
-  height: 100vh;
-  background: #020617;
+  background: radial-gradient(circle at top, #0a0a2a, var(--bg));
+  font-family: 'Orbitron', sans-serif;
   color: white;
 }
 
+.chat-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
 .sidebar {
-  width: 220px;
-  background: #020617;
-  border-right: 1px solid #1e293b;
+  width: 280px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(15px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
 }
 
-.channel {
-  padding: 15px;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.channel:hover,
-.channel.active {
-  background: rgba(59,130,246,.3);
-}
-
+/* CHAT */
 .chat {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-#messages {
+.messages {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
   overflow-y: auto;
 }
 
+/* MESSAGE */
 .message {
-  margin-bottom: 10px;
-  animation: fade .3s;
+  max-width: 60%;
+  padding: 14px 18px;
+  margin-bottom: 15px;
+  border-radius: 16px;
+  animation: fadeInUp 0.4s ease;
 }
 
-.input {
+.message.me {
+  margin-left: auto;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+}
+
+.message.other {
+  background: rgba(255,255,255,0.08);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* INPUT */
+.input-box {
   display: flex;
-  padding: 10px;
-  border-top: 1px solid #1e293b;
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.input input {
+.input-box input {
   flex: 1;
-  padding: 10px;
-}
-
-.input button {
-  background: #3b82f6;
-  color: white;
+  background: rgba(255,255,255,0.05);
   border: none;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 14px;
+  color: white;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; }
+.input-box button {
+  margin-left: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  border: none;
+  border-radius: 12px;
+  padding: 0 25px;
+  color: white;
+  cursor: pointer;
 }
