@@ -3,182 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-NET • Accès Neural</title>
+  <title>K-NET • Accès</title>
 
+  <!-- AUTH STYLES -->
   <link rel="stylesheet" href="css/auth.css">
 
   <style>
-    /* === BOOT SCREEN === */
+    /* ===== BOOT SCREEN (SIMPLE) ===== */
     #boot-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, #0b0f2a, #050510 70%);
+      background: #050510;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 999;
-      overflow: hidden;
-    }
-
-    /* 🌌 BACKGROUND PARTICLES */
-    #boot-screen::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-radial-gradient(circle at center,
-          rgba(0,212,255,0.08) 0px,
-          rgba(0,212,255,0.02) 2px,
-          transparent 4px,
-          transparent 18px
-        );
-      animation: bgPulse 6s infinite linear;
-      opacity: .4;
-    }
-
-    @keyframes bgPulse {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* 🧠 SPHERE */
-    .sphere {
-      position: relative;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 30%, #6df0ff, #1b2b5a 60%, #050510 100%);
-      box-shadow:
-        0 0 80px rgba(0,212,255,.7),
-        inset 0 0 40px rgba(255,255,255,.08);
-      animation: sphereBreath 4s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-    }
-
-    @keyframes sphereBreath {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-    }
-
-    /* ⚡ ENERGY LINES */
-    .sphere::before,
-    .sphere::after {
-      content: "";
-      position: absolute;
-      inset: -25px;
-      border-radius: 50%;
-      border: 1px solid rgba(0,212,255,.35);
-      animation: spin 18s linear infinite;
-    }
-
-    .sphere::after {
-      inset: -45px;
-      opacity: .4;
-      animation-duration: 30s;
-      border-style: dashed;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* 🔤 LOGO */
-    .logo {
-      font-family: Orbitron, sans-serif;
-      font-size: 2.4rem;
-      letter-spacing: 4px;
+      z-index: 1000;
       color: white;
-      text-shadow:
-        0 0 15px rgba(0,212,255,.9),
-        0 0 40px rgba(180,74,255,.6);
-      z-index: 3;
-      animation: logoPulse 2.5s infinite;
-    }
-
-    @keyframes logoPulse {
-      0%,100% { opacity: .85; }
-      50% { opacity: 1; }
-    }
-
-    /* 🧾 SYSTEM TEXT */
-    #system-text {
-      position: absolute;
-      bottom: 80px;
-      text-align: center;
       font-family: monospace;
-      letter-spacing: 2px;
-      font-size: .85rem;
-      color: rgba(255,255,255,.8);
+      cursor: pointer;
     }
 
-    .hidden { display: none; }
+    .boot-logo {
+      font-size: 2.8rem;
+      letter-spacing: 6px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1.2s forwards;
+    }
+
+    .boot-text {
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      opacity: 0;
+      animation: fadeIn 1.2s forwards;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-<!-- 🚀 BOOT -->
+<!-- ===== BOOT ===== -->
 <div id="boot-screen">
-  <div class="sphere">
-    <div class="logo">K-NET</div>
-  </div>
-
-  <div id="system-text">
-    <div id="line1"></div>
-    <div id="line2"></div>
-  </div>
+  <div class="boot-logo">K-NET</div>
+  <div class="boot-text">CLIQUEZ POUR ENTRER</div>
 </div>
 
-<!-- 🔐 AUTH -->
+<!-- ===== AUTH ===== -->
 <div id="auth-panel" class="hidden">
-  <!-- ⬇️ ВСТАВЬ СЮДА ТВОЙ СТАРЫЙ AUTH HTML (БЕЗ ИЗМЕНЕНИЙ) -->
+  <!-- 🔽 ЗДЕСЬ ТВОЙ СУЩЕСТВУЮЩИЙ AUTH HTML -->
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const boot = document.getElementById("boot-screen");
     const auth = document.getElementById("auth-panel");
-    const l1 = document.getElementById("line1");
-    const l2 = document.getElementById("line2");
-
-    setTimeout(() => {
-      l1.textContent = "INITIALISATION DU NOYAU…";
-    }, 700);
-
-    setTimeout(() => {
-      l2.textContent = "SYSTÈME NEURAL EN LIGNE";
-    }, 1500);
-
-    setTimeout(() => {
-      l1.textContent = "ACCÈS AUTORISÉ";
-      l2.textContent = "CLIQUEZ POUR CONTINUER";
-      boot.dataset.ready = "true";
-    }, 2600);
 
     boot.addEventListener("click", () => {
-      if (!boot.dataset.ready) return;
-
-      boot.style.transition = "opacity .9s ease, transform .9s ease";
+      boot.style.transition = "opacity .6s ease";
       boot.style.opacity = "0";
-      boot.style.transform = "scale(1.25)";
 
       setTimeout(() => {
         boot.remove();
         auth.classList.remove("hidden");
-      }, 900);
+      }, 600);
     });
   });
 </script>
 
-<!-- 🔐 FIREBASE AUTH -->
+<!-- FIREBASE AUTH -->
 <script type="module" src="js/auth.js"></script>
 
 </body>
 </html>
+
+
 
 
 
