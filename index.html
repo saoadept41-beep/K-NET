@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-NET • Neural Core</title>
+  <title>K-NET • Accès Neural</title>
 
   <link rel="stylesheet" href="css/auth.css">
 
@@ -12,53 +12,74 @@
     #boot-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, #0a0a2a, #050510);
+      background: radial-gradient(circle at top, #0b0f2a, #050510 70%);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 999;
+      overflow: hidden;
     }
 
-    .sphere {
-      position: relative;
-      width: 220px;
-      height: 220px;
-    }
-
-    .core {
+    /* 🌌 BACKGROUND PARTICLES */
+    #boot-screen::before {
+      content: "";
       position: absolute;
       inset: 0;
+      background:
+        repeating-radial-gradient(circle at center,
+          rgba(0,212,255,0.08) 0px,
+          rgba(0,212,255,0.02) 2px,
+          transparent 4px,
+          transparent 18px
+        );
+      animation: bgPulse 6s infinite linear;
+      opacity: .4;
+    }
+
+    @keyframes bgPulse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 🧠 SPHERE */
+    .sphere {
+      position: relative;
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
-      background: radial-gradient(circle, #00d4ff, #3a0ca3);
-      box-shadow: 0 0 60px #00d4ff;
-      animation: pulse 3s infinite;
+      background:
+        radial-gradient(circle at 30% 30%, #6df0ff, #1b2b5a 60%, #050510 100%);
+      box-shadow:
+        0 0 80px rgba(0,212,255,.7),
+        inset 0 0 40px rgba(255,255,255,.08);
+      animation: sphereBreath 4s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
     }
 
-    .ring {
-      position: absolute;
-      inset: -20px;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 212, 255, 0.35);
-      animation: spin 14s linear infinite;
-    }
-
-    .r2 { inset: -35px; opacity: .5; animation-duration: 20s; }
-    .r3 { inset: -50px; opacity: .3; animation-duration: 28s; }
-
-    #system-text {
-      margin-top: 40px;
-      text-align: center;
-      font-size: .9rem;
-      letter-spacing: 2px;
-      opacity: .8;
-      color: white;
-      font-family: monospace;
-    }
-
-    @keyframes pulse {
+    @keyframes sphereBreath {
       0%,100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.06); }
+    }
+
+    /* ⚡ ENERGY LINES */
+    .sphere::before,
+    .sphere::after {
+      content: "";
+      position: absolute;
+      inset: -25px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,212,255,.35);
+      animation: spin 18s linear infinite;
+    }
+
+    .sphere::after {
+      inset: -45px;
+      opacity: .4;
+      animation-duration: 30s;
+      border-style: dashed;
     }
 
     @keyframes spin {
@@ -66,18 +87,44 @@
       to { transform: rotate(360deg); }
     }
 
+    /* 🔤 LOGO */
+    .logo {
+      font-family: Orbitron, sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 4px;
+      color: white;
+      text-shadow:
+        0 0 15px rgba(0,212,255,.9),
+        0 0 40px rgba(180,74,255,.6);
+      z-index: 3;
+      animation: logoPulse 2.5s infinite;
+    }
+
+    @keyframes logoPulse {
+      0%,100% { opacity: .85; }
+      50% { opacity: 1; }
+    }
+
+    /* 🧾 SYSTEM TEXT */
+    #system-text {
+      position: absolute;
+      bottom: 80px;
+      text-align: center;
+      font-family: monospace;
+      letter-spacing: 2px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.8);
+    }
+
     .hidden { display: none; }
   </style>
 </head>
 <body>
 
-<!-- BOOT -->
+<!-- 🚀 BOOT -->
 <div id="boot-screen">
   <div class="sphere">
-    <div class="core"></div>
-    <div class="ring"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
+    <div class="logo">K-NET</div>
   </div>
 
   <div id="system-text">
@@ -86,12 +133,11 @@
   </div>
 </div>
 
-<!-- AUTH -->
+<!-- 🔐 AUTH -->
 <div id="auth-panel" class="hidden">
-  <!-- 🔐 ВСТАВЬ СЮДА СВОЙ СТАРЫЙ AUTH HTML (БЕЗ ИЗМЕНЕНИЙ) -->
+  <!-- ⬇️ ВСТАВЬ СЮДА ТВОЙ СТАРЫЙ AUTH HTML (БЕЗ ИЗМЕНЕНИЙ) -->
 </div>
 
-<!-- BOOT LOGIC (НЕ MODULE) -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const boot = document.getElementById("boot-screen");
@@ -99,42 +145,41 @@
     const l1 = document.getElementById("line1");
     const l2 = document.getElementById("line2");
 
-    if (!boot || !auth) return;
+    setTimeout(() => {
+      l1.textContent = "INITIALISATION DU NOYAU…";
+    }, 700);
 
     setTimeout(() => {
-      l1.textContent = "INITIALISATION…";
-    }, 600);
-
-    setTimeout(() => {
-      l2.textContent = "NEURAL CORE SYNCHRONISÉ";
-    }, 1400);
+      l2.textContent = "SYSTÈME NEURAL EN LIGNE";
+    }, 1500);
 
     setTimeout(() => {
       l1.textContent = "ACCÈS AUTORISÉ";
-      l2.textContent = "CLIQUEZ POUR ENTRER";
+      l2.textContent = "CLIQUEZ POUR CONTINUER";
       boot.dataset.ready = "true";
-    }, 2400);
+    }, 2600);
 
     boot.addEventListener("click", () => {
       if (!boot.dataset.ready) return;
 
-      boot.style.transition = "opacity .8s ease, transform .8s ease";
+      boot.style.transition = "opacity .9s ease, transform .9s ease";
       boot.style.opacity = "0";
-      boot.style.transform = "scale(1.2)";
+      boot.style.transform = "scale(1.25)";
 
       setTimeout(() => {
         boot.remove();
         auth.classList.remove("hidden");
-      }, 800);
+      }, 900);
     });
   });
 </script>
 
-<!-- 🔐 ТВОЙ FIREBASE AUTH -->
+<!-- 🔐 FIREBASE AUTH -->
 <script type="module" src="js/auth.js"></script>
 
 </body>
 </html>
+
 
 
 
