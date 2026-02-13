@@ -3,76 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K-NET • Gate</title>
+<title>K-NET • Login</title>
 
 <link rel="stylesheet" href="css/auth.css">
 
 <style>
-/* ===== RESET ===== */
+/* ===== BASE ===== */
 html, body {
   margin: 0;
   height: 100%;
-  background: black;
-  overflow: hidden;
+  background: #050510;
   font-family: Arial, sans-serif;
 }
 
-/* ===== GALAXY ===== */
-#galaxy {
+/* ===== BACKGROUND ===== */
+#background {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at center, #000 0%, #020214 40%, #050520 70%, #000 100%),
-    repeating-radial-gradient(circle,
-      rgba(255,255,255,0.025) 0px,
-      transparent 2px,
-      transparent 6px
-    );
-  animation: galaxyRotate 140s linear infinite;
-  transition: filter 1s ease;
+    radial-gradient(circle at top left, rgba(120,0,255,.35), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(255,80,200,.25), transparent 45%),
+    linear-gradient(135deg, #050510, #0b0f2a);
+  animation: bgMove 12s ease-in-out infinite alternate;
 }
 
-@keyframes galaxyRotate {
-  from { transform: rotate(0deg) scale(1.2); }
-  to   { transform: rotate(360deg) scale(1.2); }
+@keyframes bgMove {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
 }
 
-/* ===== BLACK HOLE ===== */
-#hole {
+/* ===== CENTER WRAP ===== */
+#intro {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 5;
 }
 
-#core {
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #000 42%, transparent 70%);
-  box-shadow:
-    0 0 140px 50px rgba(120,0,255,.35),
-    0 0 260px 110px rgba(0,180,255,.18);
-  animation: corePulse 6s ease-in-out infinite;
+/* ===== LOGO ===== */
+#logo {
+  font-size: 3rem;
+  letter-spacing: 6px;
+  color: white;
+  text-shadow:
+    0 0 15px rgba(0,200,255,.9),
+    0 0 35px rgba(180,80,255,.6);
+  animation: logoPulse 3s ease-in-out infinite;
 }
 
-@keyframes corePulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+@keyframes logoPulse {
+  0%,100% { opacity: .85; }
+  50% { opacity: 1; }
 }
 
-/* ===== ACCRETION DISK ===== */
-#disk {
+/* ===== RING ===== */
+#ring {
   position: absolute;
-  width: 560px;
-  height: 560px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
-  border-top: 2px solid rgba(180,90,255,.65);
-  border-right: 2px solid rgba(0,220,255,.45);
-  filter: blur(1px);
-  animation: spin 12s linear infinite;
+  border: 1px solid rgba(0,200,255,.35);
+  animation: spin 18s linear infinite;
 }
 
 @keyframes spin {
@@ -80,34 +75,13 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* ===== LOGO ===== */
-#logo {
-  position: fixed;
-  font-size: 2.7rem;
-  letter-spacing: 6px;
-  color: #d9ffff;
-  text-shadow:
-    0 0 12px #00f0ff,
-    0 0 40px #8a2bff,
-    0 0 90px rgba(0,200,255,.6);
-  cursor: pointer;
-  z-index: 20;
-  transition: transform .4s ease;
-}
-
-#logo:hover {
-  transform: scale(1.08);
-}
-
-/* ===== ENTER ===== */
-#enter {
-  position: fixed;
-  bottom: 80px;
+/* ===== HINT ===== */
+#hint {
+  margin-top: 30px;
   font-size: .75rem;
-  letter-spacing: 3px;
-  color: rgba(255,255,255,.45);
+  letter-spacing: 2px;
+  color: rgba(255,255,255,.6);
   animation: blink 1.6s infinite;
-  z-index: 20;
 }
 
 @keyframes blink {
@@ -119,52 +93,21 @@ html, body {
 #auth-panel {
   display: none;
   position: relative;
-  z-index: 30;
-}
-
-/* ===== TRANSITION ===== */
-body.entering #galaxy {
-  filter: blur(6px) brightness(.6);
-}
-
-body.entering #core,
-body.entering #disk,
-body.entering #logo,
-body.entering #enter {
-  animation: suck 1.2s ease forwards;
-}
-
-@keyframes suck {
-  to {
-    transform: scale(0);
-    opacity: 0;
-  }
-}
-
-body.entered #galaxy,
-body.entered #hole,
-body.entered #logo,
-body.entered #enter {
-  display: none;
-}
-
-body.entered #auth-panel {
-  display: block;
+  z-index: 10;
 }
 </style>
 </head>
 
 <body>
 
-<div id="galaxy"></div>
+<div id="background"></div>
 
-<div id="hole">
-  <div id="disk"></div>
-  <div id="core"></div>
+<!-- ===== INTRO ===== -->
+<div id="intro">
+  <div id="ring"></div>
+  <div id="logo">K-NET</div>
+  <div id="hint">CLICK TO ENTER</div>
 </div>
-
-<div id="logo">K-NET</div>
-<div id="enter">CLICK TO ENTER</div>
 
 <!-- ===== AUTH ===== -->
 <div id="auth-panel">
@@ -181,33 +124,23 @@ body.entered #auth-panel {
   </div>
 </div>
 
-<!-- ===== SOUND ===== -->
-<audio id="hum" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-deep-ambience-1849.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-const logo = document.getElementById("logo");
-const hum = document.getElementById("hum");
-
-logo.addEventListener("click", () => {
-  document.body.classList.add("entering");
-  hum.volume = 0.4;
-  hum.play().catch(()=>{});
+const intro = document.getElementById("intro");
+intro.addEventListener("click", () => {
+  intro.style.opacity = "0";
+  intro.style.transition = "opacity .6s ease";
 
   setTimeout(() => {
-    document.body.classList.remove("entering");
-    document.body.classList.add("entered");
-  }, 1200);
+    intro.remove();
+    document.getElementById("auth-panel").style.display = "block";
+  }, 600);
 });
 </script>
 
 <script type="module" src="js/auth.js"></script>
+
 </body>
 </html>
-
-
-
 
 
 
