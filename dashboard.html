@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>K-NET • Tableau de bord</title>
-<link rel="stylesheet" href="css/chat.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-NET • Tableau de bord</title>
+  <link rel="stylesheet" href="css/chat.css">
 </head>
-
 <body>
 
 <div class="chat-container">
@@ -31,10 +31,16 @@
 
 <!-- PROFIL -->
 <div id="profileModal" class="profile hidden">
-  <div class="profile-card">
-    <h3>Profil</h3>
-    <p><b>Nom :</b> <span id="pName"></span></p>
-    <p><b>Rôle :</b> <span id="pRole"></span></p>
+  <div class="profile-card neon">
+    <div class="avatar"></div>
+    <h3 id="pName"></h3>
+    <div class="role-badge" id="pRole"></div>
+
+    <div class="profile-info">
+      <div><span>Statut</span><b>En ligne</b></div>
+      <div><span>Membre depuis</span><b id="pDate"></b></div>
+    </div>
+
     <button id="closeProfile">Fermer</button>
   </div>
 </div>
