@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>K-NET • Connexion</title>
+  <meta charset="UTF-8">
 
-<link rel="stylesheet" href="css/auth.css">
+  <!-- ❗ ОБЯЗАТЕЛЬНО -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>K-NET • Connexion</title>
+  <link rel="stylesheet" href="css/auth.css">
 </head>
 
 <body>
@@ -27,7 +30,6 @@
       <button class="tab" id="registerTab">Inscription</button>
     </div>
 
-    <!-- LOGIN -->
     <form id="loginForm" class="auth-form">
       <div class="input-group">
         <input id="loginEmail" required>
@@ -47,7 +49,6 @@
       </button>
     </form>
 
-    <!-- REGISTER -->
     <form id="registerForm" class="auth-form hidden">
       <div class="input-group">
         <input id="regEmail" required>
@@ -81,6 +82,8 @@
 <script type="module" src="js/auth.js"></script>
 </body>
 </html>
+
+
 
 
 
