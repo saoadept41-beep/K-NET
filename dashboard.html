@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>K-NET • Tableau de bord</title>
-
 <link rel="stylesheet" href="css/chat.css">
 </head>
 
@@ -13,11 +12,10 @@
 
   <div class="sidebar">
     <h2>K-NET</h2>
-
     <button class="nav-btn" data-chat="global">🌍 Chat global</button>
     <button class="nav-btn" data-chat="role">🧠 Chat de rôle</button>
     <button class="nav-btn" data-chat="admin">🔐 Chat administrateur</button>
-
+    <button class="nav-btn" id="profileBtn">👤 Profil</button>
     <button class="nav-btn logout" id="logoutBtn">🚪 Déconnexion</button>
   </div>
 
@@ -29,12 +27,23 @@
       <button type="submit">➤</button>
     </form>
   </div>
+</div>
 
+<!-- PROFIL -->
+<div id="profileModal" class="profile hidden">
+  <div class="profile-card">
+    <h3>Profil</h3>
+    <p><b>Nom :</b> <span id="pName"></span></p>
+    <p><b>Rôle :</b> <span id="pRole"></span></p>
+    <button id="closeProfile">Fermer</button>
+  </div>
 </div>
 
 <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
+
+
 
 
 
