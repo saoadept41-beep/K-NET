@@ -1,34 +1,42 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>K-NET • Dashboard</title>
-<link rel="stylesheet" href="css/app.css">
+<title>K-NET • Tableau de bord</title>
+
+<link rel="stylesheet" href="css/chat.css">
 </head>
 
 <body>
 
-<div id="sidebar">
-  <h2>K-NET</h2>
-  <button data-chat="global">🌍 Общий чат</button>
-  <button data-chat="role">🧠 Чат роли</button>
-  <button data-chat="admin">🔐 Админ чат</button>
-  <button id="profileBtn">👤 Профиль</button>
-</div>
+<div class="chat-container">
 
-<div id="chat">
-  <div id="messages"></div>
-  <form id="sendForm">
-    <input id="messageInput" placeholder="Сообщение">
-    <button>➤</button>
-  </form>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>K-NET</h2>
+
+    <button class="nav-btn" data-chat="global">🌍 Chat global</button>
+    <button class="nav-btn" data-chat="role">🧠 Chat de rôle</button>
+    <button class="nav-btn" data-chat="admin">🔐 Chat administrateur</button>
+
+    <button class="nav-btn logout" id="logoutBtn">🚪 Déconnexion</button>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat">
+    <div class="messages" id="messages"></div>
+
+    <form class="input-box" id="sendForm">
+      <input id="messageInput" placeholder="Écrire un message…" autocomplete="off">
+      <button type="submit">➤</button>
+    </form>
+  </div>
+
 </div>
 
 <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
-
-
 
 
 
