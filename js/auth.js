@@ -1,17 +1,12 @@
-// js/auth.js
 import { auth, db } from "./firebase.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import {
-  ref,
-  set
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ===== DOM =====
   const sphere = document.getElementById("sphere");
   const authPanel = document.getElementById("auth-panel");
 
@@ -30,10 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const errorBox = document.getElementById("error-message");
 
-  // ===== UI =====
-  sphere.onclick = () => {
-    authPanel.classList.add("show");
-  };
+  sphere.onclick = () => authPanel.classList.add("show");
 
   loginTab.onclick = () => {
     loginTab.classList.add("active");
@@ -49,8 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.classList.add("hidden");
   };
 
-  // ===== LOGIN =====
-  loginForm.addEventListener("submit", async (e) => {
+  loginForm.onsubmit = async e => {
     e.preventDefault();
     clearError();
 
@@ -60,14 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
         loginEmail.value,
         loginPassword.value
       );
-      window.location.href = "dashboard.html";
+      location.href = "dashboard.html";
     } catch (err) {
       showError(err.message);
     }
-  });
+  };
 
-  // ===== REGISTER =====
-  registerForm.addEventListener("submit", async (e) => {
+  registerForm.onsubmit = async e => {
     e.preventDefault();
     clearError();
 
@@ -84,15 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
         createdAt: Date.now()
       });
 
-      window.location.href = "dashboard.html";
+      location.href = "dashboard.html";
     } catch (err) {
       showError(err.message);
     }
-  });
+  };
 
-  // ===== ERROR =====
   function showError(msg) {
-    errorBox.textContent = msg;
+    if (msg.includes("invalid"))
+      errorBox.textContent = "Email ou mot de passe incorrect";
+    else if (msg.includes("already"))
+      errorBox.textContent = "Cet email est déjà utilisé";
+    else if (msg.includes("weak"))
+      errorBox.textContent = "Mot de passe trop faible";
+    else
+      errorBox.textContent = "Erreur inconnue";
+
     errorBox.classList.add("show");
   }
 
@@ -100,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
     errorBox.textContent = "";
     errorBox.classList.remove("show");
   }
-
 });
 
 
