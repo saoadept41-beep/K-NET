@@ -1,52 +1,169 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-NET • Connexion</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-NET • Login</title>
 
-  <!-- AUTH CSS -->
-  <link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/auth.css">
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(circle at top left, #6a00ff66, transparent 50%),
-        radial-gradient(circle at bottom right, #ff4fd866, transparent 50%),
-        linear-gradient(135deg, #050510, #0b0f2a);
-    }
-  </style>
+<style>
+/* ===== MAIN SCREEN ===== */
+#main-screen {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, #6a00ff55, transparent 50%),
+    radial-gradient(circle at bottom right, #ff4fd855, transparent 50%),
+    linear-gradient(135deg, #050510, #0b0f2a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+/* ===== SPHERE ===== */
+#sphere {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #7df9ff, #3a1c71 60%, #050510 100%);
+  box-shadow:
+    0 0 50px rgba(160,80,255,.6),
+    0 0 90px rgba(0,200,255,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+
+/* ===== CORE ===== */
+.sphere-core {
+  text-align: center;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+#logo {
+  font-size: 2.4rem;
+  letter-spacing: 6px;
+  text-shadow:
+    0 0 15px rgba(0,200,255,.9),
+    0 0 30px rgba(255,100,200,.6);
+}
+
+.subtitle {
+  font-size: .75rem;
+  letter-spacing: 3px;
+  opacity: .8;
+  margin-top: 6px;
+}
+
+/* ===== HINT ===== */
+.hint {
+  margin-top: 30px;
+  font-size: .75rem;
+  letter-spacing: 2px;
+  opacity: .6;
+  animation: blink 1.8s infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: .4; }
+  50% { opacity: .8; }
+}
+
+/* ===== AUTH PANEL ===== */
+#auth-panel {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+
+#auth-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== UTIL ===== */
+.hidden { display: none; }
+</style>
 </head>
+
 <body>
 
-  <!-- ===== AUTH (КАК БЫЛО) ===== -->
-  <div class="auth-container">
-    <h1>K-NET</h1>
-
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Mot de passe">
-
-    <button id="loginBtn">Connexion</button>
-    <button id="registerBtn">Inscription</button>
-
-    <p id="authMessage"></p>
+<!-- ===== MAIN INTRO ===== -->
+<div id="main-screen">
+  <div id="sphere">
+    <div class="sphere-core">
+      <div id="logo">K-NET</div>
+      <div class="subtitle">NEURAL GATE</div>
+    </div>
   </div>
+  <div class="hint">CLICK TO ENTER</div>
+</div>
 
-  <!-- FIREBASE AUTH -->
-  <script type="module" src="js/auth.js"></script>
+<!-- ===== AUTH ===== -->
+<div id="auth-panel">
+  <div class="auth-container">
+    <div class="tabs">
+      <button class="tab active" id="loginTab">Login</button>
+      <button class="tab" id="registerTab">Register</button>
+    </div>
 
+    <form id="loginForm" class="auth-form">
+      <input id="loginEmail" placeholder="Email">
+      <input id="loginPassword" type="password" placeholder="Password">
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+
+    <form id="registerForm" class="auth-form hidden">
+      <input id="regEmail" placeholder="Email">
+      <input id="regPassword" type="password" placeholder="Password">
+
+      <select id="role">
+        <option value="driver">Водитель</option>
+        <option value="logistic">Логист</option>
+        <option value="mechanic">Механик</option>
+        <option value="organizer">Организатор</option>
+      </select>
+
+      <button type="submit" class="submit-btn">Register</button>
+    </form>
+
+    <div id="error-message"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const main = document.getElementById("main-screen");
+  const auth = document.getElementById("auth-panel");
+
+  main.addEventListener("click", () => {
+    main.style.opacity = "0";
+    main.style.transform = "scale(1.2)";
+
+    setTimeout(() => {
+      main.remove();
+      auth.classList.add("active");
+    }, 700);
+  });
+});
+</script>
+
+<script type="module" src="js/auth.js"></script>
 </body>
 </html>
-
-
-
-
-
 
 
 
