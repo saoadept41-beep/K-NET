@@ -3,169 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K-NET • Login</title>
+<title>K-NET • Gate</title>
 
 <link rel="stylesheet" href="css/auth.css">
 
 <style>
-/* ===== MAIN SCREEN ===== */
-#main-screen {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at top left, #6a00ff55, transparent 50%),
-    radial-gradient(circle at bottom right, #ff4fd855, transparent 50%),
-    linear-gradient(135deg, #050510, #0b0f2a);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  transition: opacity .7s ease, transform .7s ease;
-}
-
-/* ===== SPHERE ===== */
-#sphere {
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 30%, #7df9ff, #3a1c71 60%, #050510 100%);
-  box-shadow:
-    0 0 50px rgba(160,80,255,.6),
-    0 0 90px rgba(0,200,255,.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: pulse 3s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.07); }
-}
-
-/* ===== CORE ===== */
-.sphere-core {
-  text-align: center;
-  color: white;
+/* ===== RESET ===== */
+html, body {
+  margin: 0;
+  height: 100%;
+  background: black;
+  overflow: hidden;
   font-family: Arial, sans-serif;
 }
 
-#logo {
-  font-size: 2.4rem;
-  letter-spacing: 6px;
-  text-shadow:
-    0 0 15px rgba(0,200,255,.9),
-    0 0 30px rgba(255,100,200,.6);
+/* ===== GALAXY ===== */
+#galaxy {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, #000 0%, #020214 40%, #050520 70%, #000 100%),
+    repeating-radial-gradient(circle,
+      rgba(255,255,255,0.025) 0px,
+      transparent 2px,
+      transparent 6px
+    );
+  animation: galaxyRotate 140s linear infinite;
+  transition: filter 1s ease;
 }
 
-.subtitle {
+@keyframes galaxyRotate {
+  from { transform: rotate(0deg) scale(1.2); }
+  to   { transform: rotate(360deg) scale(1.2); }
+}
+
+/* ===== BLACK HOLE ===== */
+#hole {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#core {
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #000 42%, transparent 70%);
+  box-shadow:
+    0 0 140px 50px rgba(120,0,255,.35),
+    0 0 260px 110px rgba(0,180,255,.18);
+  animation: corePulse 6s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* ===== ACCRETION DISK ===== */
+#disk {
+  position: absolute;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  border-top: 2px solid rgba(180,90,255,.65);
+  border-right: 2px solid rgba(0,220,255,.45);
+  filter: blur(1px);
+  animation: spin 12s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== LOGO ===== */
+#logo {
+  position: fixed;
+  font-size: 2.7rem;
+  letter-spacing: 6px;
+  color: #d9ffff;
+  text-shadow:
+    0 0 12px #00f0ff,
+    0 0 40px #8a2bff,
+    0 0 90px rgba(0,200,255,.6);
+  cursor: pointer;
+  z-index: 20;
+  transition: transform .4s ease;
+}
+
+#logo:hover {
+  transform: scale(1.08);
+}
+
+/* ===== ENTER ===== */
+#enter {
+  position: fixed;
+  bottom: 80px;
   font-size: .75rem;
   letter-spacing: 3px;
-  opacity: .8;
-  margin-top: 6px;
-}
-
-/* ===== HINT ===== */
-.hint {
-  margin-top: 30px;
-  font-size: .75rem;
-  letter-spacing: 2px;
-  opacity: .6;
-  animation: blink 1.8s infinite;
+  color: rgba(255,255,255,.45);
+  animation: blink 1.6s infinite;
+  z-index: 20;
 }
 
 @keyframes blink {
-  0%,100% { opacity: .4; }
+  0%,100% { opacity: .3; }
   50% { opacity: .8; }
 }
 
-/* ===== AUTH PANEL ===== */
+/* ===== AUTH ===== */
 #auth-panel {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .6s ease;
+  display: none;
+  position: relative;
+  z-index: 30;
 }
 
-#auth-panel.active {
-  opacity: 1;
-  pointer-events: auto;
+/* ===== TRANSITION ===== */
+body.entering #galaxy {
+  filter: blur(6px) brightness(.6);
 }
 
-/* ===== UTIL ===== */
-.hidden { display: none; }
+body.entering #core,
+body.entering #disk,
+body.entering #logo,
+body.entering #enter {
+  animation: suck 1.2s ease forwards;
+}
+
+@keyframes suck {
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+body.entered #galaxy,
+body.entered #hole,
+body.entered #logo,
+body.entered #enter {
+  display: none;
+}
+
+body.entered #auth-panel {
+  display: block;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ===== MAIN INTRO ===== -->
-<div id="main-screen">
-  <div id="sphere">
-    <div class="sphere-core">
-      <div id="logo">K-NET</div>
-      <div class="subtitle">NEURAL GATE</div>
-    </div>
-  </div>
-  <div class="hint">CLICK TO ENTER</div>
+<div id="galaxy"></div>
+
+<div id="hole">
+  <div id="disk"></div>
+  <div id="core"></div>
 </div>
+
+<div id="logo">K-NET</div>
+<div id="enter">CLICK TO ENTER</div>
 
 <!-- ===== AUTH ===== -->
 <div id="auth-panel">
   <div class="auth-container">
-    <div class="tabs">
-      <button class="tab active" id="loginTab">Login</button>
-      <button class="tab" id="registerTab">Register</button>
-    </div>
+    <h1>K-NET</h1>
 
-    <form id="loginForm" class="auth-form">
-      <input id="loginEmail" placeholder="Email">
-      <input id="loginPassword" type="password" placeholder="Password">
-      <button type="submit" class="submit-btn">Login</button>
-    </form>
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
 
-    <form id="registerForm" class="auth-form hidden">
-      <input id="regEmail" placeholder="Email">
-      <input id="regPassword" type="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <button id="registerBtn">Register</button>
 
-      <select id="role">
-        <option value="driver">Водитель</option>
-        <option value="logistic">Логист</option>
-        <option value="mechanic">Механик</option>
-        <option value="organizer">Организатор</option>
-      </select>
-
-      <button type="submit" class="submit-btn">Register</button>
-    </form>
-
-    <div id="error-message"></div>
+    <div id="authMessage"></div>
   </div>
 </div>
 
+<!-- ===== SOUND ===== -->
+<audio id="hum" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-deep-ambience-1849.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const main = document.getElementById("main-screen");
-  const auth = document.getElementById("auth-panel");
+const logo = document.getElementById("logo");
+const hum = document.getElementById("hum");
 
-  main.addEventListener("click", () => {
-    main.style.opacity = "0";
-    main.style.transform = "scale(1.2)";
+logo.addEventListener("click", () => {
+  document.body.classList.add("entering");
+  hum.volume = 0.4;
+  hum.play().catch(()=>{});
 
-    setTimeout(() => {
-      main.remove();
-      auth.classList.add("active");
-    }, 700);
-  });
+  setTimeout(() => {
+    document.body.classList.remove("entering");
+    document.body.classList.add("entered");
+  }, 1200);
 });
 </script>
 
 <script type="module" src="js/auth.js"></script>
 </body>
 </html>
-
-
 
 
 
