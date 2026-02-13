@@ -9,40 +9,67 @@
   <link rel="stylesheet" href="css/auth.css">
 
   <style>
-    /* ===== BOOT SCREEN (SIMPLE) ===== */
+    /* ===== BOOT SCREEN ===== */
     #boot-screen {
       position: fixed;
       inset: 0;
-      background: #050510;
+      background: radial-gradient(circle at center, #0b1d3a, #050510 70%);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      color: white;
-      font-family: monospace;
       cursor: pointer;
+      overflow: hidden;
     }
 
-    .boot-logo {
-      font-size: 2.8rem;
-      letter-spacing: 6px;
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeIn 1.2s forwards;
+    /* 🌈 COLORED GLOW */
+    #boot-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(0,212,255,.15), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(180,74,255,.15), transparent 60%);
+      animation: glowMove 8s infinite alternate;
     }
 
-    .boot-text {
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      opacity: 0;
-      animation: fadeIn 1.2s forwards;
-      animation-delay: 0.8s;
+    @keyframes glowMove {
+      from { transform: translate(-10px, -10px); }
+      to { transform: translate(10px, 10px); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* 🔵 SPHERE */
+    .sphere {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, #5fe9ff, #1b2b5a 60%, #050510 100%);
+      box-shadow:
+        0 0 60px rgba(0,212,255,.6),
+        inset 0 0 30px rgba(255,255,255,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 3.5s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* 🔤 LOGO */
+    .logo {
+      font-family: Arial, sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 5px;
+      color: white;
+      text-shadow:
+        0 0 15px rgba(0,212,255,.9),
+        0 0 30px rgba(180,74,255,.6);
+      user-select: none;
     }
 
     .hidden {
@@ -54,13 +81,14 @@
 
 <!-- ===== BOOT ===== -->
 <div id="boot-screen">
-  <div class="boot-logo">K-NET</div>
-  <div class="boot-text">CLIQUEZ POUR ENTRER</div>
+  <div class="sphere">
+    <div class="logo">K-NET</div>
+  </div>
 </div>
 
 <!-- ===== AUTH ===== -->
 <div id="auth-panel" class="hidden">
-  <!-- 🔽 ЗДЕСЬ ТВОЙ СУЩЕСТВУЮЩИЙ AUTH HTML -->
+  <!-- 🔽 ВСТАВЬ СЮДА СВОЙ СТАРЫЙ AUTH HTML -->
 </div>
 
 <script>
@@ -85,9 +113,6 @@
 
 </body>
 </html>
-
-
-
 
 
 
