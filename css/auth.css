@@ -548,7 +548,81 @@ html, body {
     
     .auth-container {
         padding: 30px 25px;
-    }
+    /* === NEURAL CORE BOOT === */
+
+#boot-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #0a0a2a, #050510);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.sphere {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00d4ff, #3a0ca3);
+  box-shadow: 0 0 60px #00d4ff;
+  animation: corePulse 3s infinite;
+}
+
+.ring {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  animation: spin 14s linear infinite;
+}
+
+.r2 {
+  inset: -35px;
+  opacity: 0.5;
+  animation-duration: 20s;
+}
+
+.r3 {
+  inset: -50px;
+  opacity: 0.3;
+  animation-duration: 28s;
+}
+
+#system-text {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bootOut {
+  to {
+    opacity: 0;
+    transform: scale(1.2);
+  }
 }
 
 
