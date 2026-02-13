@@ -1,48 +1,38 @@
-#auth-panel {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-}
-
-.auth-box {
-  background: #020617;
-  padding: 30px;
-  border-radius: 12px;
-  width: 300px;
-  box-shadow: 0 0 40px rgba(59,130,246,.4);
-}
-
-.auth-box h2 {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.auth-box input,
-.auth-box select,
-.auth-box button {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-}
-
-.auth-box button {
-  background: #3b82f6;
+body {
+  margin: 0;
+  background: radial-gradient(#050b1e, #000);
+  font-family: 'Segoe UI', sans-serif;
   color: white;
+  overflow: hidden;
+}
+
+#sphere {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #7aa2ff, #2a3a8c);
+  box-shadow:
+    0 0 40px rgba(122,162,255,.8),
+    inset 0 0 30px rgba(255,255,255,.2);
+  animation: pulse 3s infinite;
   cursor: pointer;
 }
 
-#error {
-  margin-top: 10px;
-  color: #f87171;
-  font-size: 12px;
-  text-align: center;
+@keyframes pulse {
+  0% { box-shadow: 0 0 30px #6a8cff; }
+  50% { box-shadow: 0 0 60px #8fb1ff; }
+  100% { box-shadow: 0 0 30px #6a8cff; }
 }
+
+.fade-out {
+  animation: fade 0.6s forwards;
+}
+
+@keyframes fade {
+  to { opacity: 0; transform: scale(1.2); }
+}
+
+.hidden { display: none; }
 
 
 
