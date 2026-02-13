@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>K-NET • Neural Gate</title>
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/auth.css">
+<meta charset="UTF-8">
+<title>K-NET • Neural Gate</title>
+<link rel="stylesheet" href="css/auth.css">
 </head>
 
 <body>
 
-<div id="boot-screen">
-  <div class="core">
-    <div class="ring"></div>
-    <div class="logo">K-NET</div>
-    <div class="subtitle">Interface neuronale</div>
+<div id="main-screen">
+  <div id="sphere">
+    <div class="sphere-core">
+      <div class="logo">K-NET</div>
+      <div class="subtitle">NEURAL GATE</div>
+    </div>
   </div>
-  <div class="enter">CLIQUEZ POUR ENTRER</div>
+  <div class="hint">CLIQUEZ POUR ENTRER</div>
 </div>
 
 <div id="auth-panel" class="hidden">
-  <div class="auth-box">
+  <div class="auth-container">
     <h2>Connexion</h2>
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Mot de passe">
+    <input id="loginEmail" type="email" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Mot de passe">
+    <button id="loginBtn">Se connecter</button>
 
-    <select id="role">
-      <option value="driver">🚚 Chauffeur</option>
-      <option value="logistic">📦 Logistique</option>
-      <option value="mechanic">🛠️ Mécanicien</option>
-      <option value="organizer">🧠 Organisateur</option>
-      <option value="admin">👑 Admin</option>
-    </select>
-
-    <button id="login">Se connecter</button>
-    <button id="register">Créer un compte</button>
-
-    <div id="error"></div>
+    <p id="error-message"></p>
   </div>
 </div>
 
 <script type="module" src="js/auth.js"></script>
 </body>
 </html>
-
 
