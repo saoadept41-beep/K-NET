@@ -5,28 +5,30 @@ import { ref, push, onChildAdded, get, remove, off } from "https://www.gstatic.c
 const messages = document.getElementById("messages");
 const sendForm = document.getElementById("sendForm");
 const messageInput = document.getElementById("messageInput");
-const logoutBtn = document.getElementById("logoutBtn");
 
 const profileBtn = document.getElementById("profileBtn");
 const profileModal = document.getElementById("profileModal");
 const closeProfile = document.getElementById("closeProfile");
+
 const pName = document.getElementById("pName");
 const pRole = document.getElementById("pRole");
+const pDate = document.getElementById("pDate");
 
 let currentChat = "global";
-let chatRef = null;
+let chatRef;
 let currentUser = {};
 
 onAuthStateChanged(auth, async user => {
-  if (!user) location.href = "index.html";
+  if (!user) return location.href = "index.html";
 
   const snap = await get(ref(db, "users/" + user.uid));
   currentUser = snap.val();
 
   pName.textContent = currentUser.email;
   pRole.textContent = currentUser.role;
+  pDate.textContent = new Date(currentUser.createdAt || Date.now()).toLocaleDateString("fr-FR");
 
-  switchChat("global");
+  loadChat("global");
 });
 
 sendForm.onsubmit = e => {
@@ -45,13 +47,10 @@ sendForm.onsubmit = e => {
 };
 
 document.querySelectorAll("[data-chat]").forEach(btn => {
-  btn.onclick = () => {
-    const type = btn.dataset.chat;
-    switchChat(type === "role" ? currentUser.role : type);
-  };
+  btn.onclick = () => loadChat(btn.dataset.chat === "role" ? currentUser.role : btn.dataset.chat);
 });
 
-function switchChat(name) {
+function loadChat(name) {
   messages.innerHTML = "";
   if (chatRef) off(chatRef);
 
@@ -59,24 +58,23 @@ function switchChat(name) {
   chatRef = ref(db, "chats/" + currentChat);
 
   onChildAdded(chatRef, snap => {
-    const data = snap.val();
+    const d = snap.val();
     const div = document.createElement("div");
-    div.className = "message " + (data.uid === auth.currentUser.uid ? "me" : "other");
+    div.className = "message " + (d.uid === auth.currentUser.uid ? "me" : "other");
 
-    const header = document.createElement("div");
-    header.className = "msg-header";
-    header.textContent = `${data.author} • ${data.role}`;
+    div.innerHTML = `
+      <div class="msg-header">${d.author} • ${d.role}</div>
+      <div>${d.text}</div>
+    `;
 
-    const text = document.createElement("div");
-    text.textContent = data.text;
-
-    div.append(header, text);
-
-    if (data.uid === auth.currentUser.uid) {
+    if (d.uid === auth.currentUser.uid) {
       const del = document.createElement("span");
       del.className = "delete-msg";
       del.textContent = "✖";
-      del.onclick = () => remove(ref(db, `chats/${currentChat}/${snap.key}`));
+      del.onclick = () => {
+        div.classList.add("removing");
+        setTimeout(() => remove(ref(db, `chats/${currentChat}/${snap.key}`)), 500);
+      };
       div.appendChild(del);
     }
 
@@ -85,13 +83,9 @@ function switchChat(name) {
   });
 }
 
-logoutBtn.onclick = async () => {
-  await signOut(auth);
-  location.href = "index.html";
-};
-
 profileBtn.onclick = () => profileModal.classList.remove("hidden");
 closeProfile.onclick = () => profileModal.classList.add("hidden");
+
 
 
 
