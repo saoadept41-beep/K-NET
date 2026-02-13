@@ -96,7 +96,37 @@ document.addEventListener("DOMContentLoaded", () => {
   function clearError() {
     errorBox.textContent = "";
     errorBox.classList.remove("show");
-  }
+  // === NEURAL CORE BOOT LOGIC ===
+
+const boot = document.getElementById("boot-screen");
+const authPanel = document.getElementById("auth-panel");
+
+const l1 = document.getElementById("line1");
+const l2 = document.getElementById("line2");
+
+setTimeout(() => {
+  l1.textContent = "INITIALISATION…";
+}, 700);
+
+setTimeout(() => {
+  l2.textContent = "NEURAL CORE SYNCHRONISÉ";
+}, 1500);
+
+setTimeout(() => {
+  l1.textContent = "ACCÈS AUTORISÉ";
+  l2.textContent = "CLIQUEZ POUR ENTRER";
+  boot.classList.add("ready");
+}, 2600);
+
+boot.addEventListener("click", () => {
+  if (!boot.classList.contains("ready")) return;
+
+  boot.style.animation = "bootOut 0.8s forwards";
+  setTimeout(() => {
+    boot.remove();
+    authPanel.classList.remove("hidden");
+  }, 700);
 });
+
 
 
