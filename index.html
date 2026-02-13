@@ -3,116 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-NET • Accès</title>
+  <title>K-NET • Neural Core</title>
 
-  <!-- AUTH STYLES -->
-  <link rel="stylesheet" href="css/auth.css">
-
-  <style>
-    /* ===== BOOT SCREEN ===== */
-    #boot-screen {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, #0b1d3a, #050510 70%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      cursor: pointer;
-      overflow: hidden;
-    }
-
-    /* 🌈 COLORED GLOW */
-    #boot-screen::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(0,212,255,.15), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(180,74,255,.15), transparent 60%);
-      animation: glowMove 8s infinite alternate;
-    }
-
-    @keyframes glowMove {
-      from { transform: translate(-10px, -10px); }
-      to { transform: translate(10px, 10px); }
-    }
-
-    /* 🔵 SPHERE */
-    .sphere {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 30%, #5fe9ff, #1b2b5a 60%, #050510 100%);
-      box-shadow:
-        0 0 60px rgba(0,212,255,.6),
-        inset 0 0 30px rgba(255,255,255,.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: pulse 3.5s ease-in-out infinite;
-      z-index: 2;
-    }
-
-    @keyframes pulse {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    /* 🔤 LOGO */
-    .logo {
-      font-family: Arial, sans-serif;
-      font-size: 2.2rem;
-      letter-spacing: 5px;
-      color: white;
-      text-shadow:
-        0 0 15px rgba(0,212,255,.9),
-        0 0 30px rgba(180,74,255,.6);
-      user-select: none;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="css/core.css">
 </head>
 <body>
 
-<!-- ===== BOOT ===== -->
 <div id="boot-screen">
+
   <div class="sphere">
-    <div class="logo">K-NET</div>
+    <div class="core"></div>
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
   </div>
+
+  <div id="system-text">
+    <span id="line1"></span><br>
+    <span id="line2"></span>
+  </div>
+
 </div>
 
-<!-- ===== AUTH ===== -->
 <div id="auth-panel" class="hidden">
-  <!-- 🔽 ВСТАВЬ СЮДА СВОЙ СТАРЫЙ AUTH HTML -->
+  <!-- ТВОЙ СУЩЕСТВУЮЩИЙ AUTH БЕЗ ИЗМЕНЕНИЙ -->
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const boot = document.getElementById("boot-screen");
-    const auth = document.getElementById("auth-panel");
-
-    boot.addEventListener("click", () => {
-      boot.style.transition = "opacity .6s ease";
-      boot.style.opacity = "0";
-
-      setTimeout(() => {
-        boot.remove();
-        auth.classList.remove("hidden");
-      }, 600);
-    });
-  });
-</script>
-
-<!-- FIREBASE AUTH -->
-<script type="module" src="js/auth.js"></script>
-
+<script src="js/core.js"></script>
 </body>
 </html>
+
+
 
 
 
