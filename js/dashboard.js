@@ -1,91 +1,64 @@
 import { auth, db } from "./firebase.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { ref, push, onChildAdded, get, remove, off } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { signOut, onAuthStateChanged } from 
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const messages = document.getElementById("messages");
-const sendForm = document.getElementById("sendForm");
+import { 
+  collection, 
+  addDoc, 
+  onSnapshot, 
+  query, 
+  orderBy, 
+  serverTimestamp 
+} from 
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const logoutBtn = document.getElementById("logoutBtn");
+const messageForm = document.getElementById("messageForm");
 const messageInput = document.getElementById("messageInput");
+const messagesDiv = document.getElementById("messages");
 
-const profileBtn = document.getElementById("profileBtn");
-const profileModal = document.getElementById("profileModal");
-const closeProfile = document.getElementById("closeProfile");
-
-const pName = document.getElementById("pName");
-const pRole = document.getElementById("pRole");
-const pDate = document.getElementById("pDate");
-
-let currentChat = "global";
-let chatRef;
-let currentUser = {};
-
-onAuthStateChanged(auth, async user => {
-  if (!user) return location.href = "index.html";
-
-  const snap = await get(ref(db, "users/" + user.uid));
-  currentUser = snap.val();
-
-  pName.textContent = currentUser.email;
-  pRole.textContent = currentUser.role;
-  pDate.textContent = new Date(currentUser.createdAt || Date.now()).toLocaleDateString("fr-FR");
-
-  loadChat("global");
+/* Проверка авторизации */
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "index.html";
+  }
 });
 
-sendForm.onsubmit = e => {
-  e.preventDefault();
-  if (!messageInput.value.trim()) return;
+/* Logout */
+logoutBtn.onclick = () => {
+  signOut(auth);
+};
 
-  push(ref(db, "chats/" + currentChat), {
+/* Отправка сообщения */
+messageForm.onsubmit = async (e) => {
+  e.preventDefault();
+
+  if (messageInput.value.trim() === "") return;
+
+  await addDoc(collection(db, "messages"), {
     text: messageInput.value,
-    uid: auth.currentUser.uid,
-    author: currentUser.email,
-    role: currentUser.role,
-    time: Date.now()
+    user: auth.currentUser.email,
+    createdAt: serverTimestamp()
   });
 
   messageInput.value = "";
 };
 
-document.querySelectorAll("[data-chat]").forEach(btn => {
-  btn.onclick = () => loadChat(btn.dataset.chat === "role" ? currentUser.role : btn.dataset.chat);
-});
+/* Загрузка сообщений в реальном времени */
+const q = query(collection(db, "messages"), orderBy("createdAt"));
 
-function loadChat(name) {
-  messages.innerHTML = "";
-  if (chatRef) off(chatRef);
+onSnapshot(q, snapshot => {
+  messagesDiv.innerHTML = "";
 
-  currentChat = name;
-  chatRef = ref(db, "chats/" + currentChat);
-
-  onChildAdded(chatRef, snap => {
-    const d = snap.val();
+  snapshot.forEach(doc => {
+    const data = doc.data();
     const div = document.createElement("div");
-    div.className = "message " + (d.uid === auth.currentUser.uid ? "me" : "other");
-
-    div.innerHTML = `
-      <div class="msg-header">${d.author} • ${d.role}</div>
-      <div>${d.text}</div>
-    `;
-
-    if (d.uid === auth.currentUser.uid) {
-      const del = document.createElement("span");
-      del.className = "delete-msg";
-      del.textContent = "✖";
-      del.onclick = () => {
-        div.classList.add("removing");
-        setTimeout(() => remove(ref(db, `chats/${currentChat}/${snap.key}`)), 500);
-      };
-      div.appendChild(del);
-    }
-
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+    div.className = "message";
+    div.innerHTML = `<strong>${data.user}</strong><br>${data.text}`;
+    messagesDiv.appendChild(div);
   });
-}
 
-profileBtn.onclick = () => profileModal.classList.remove("hidden");
-closeProfile.onclick = () => profileModal.classList.add("hidden");
-
-
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+});
 
 
