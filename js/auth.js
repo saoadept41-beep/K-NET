@@ -1,132 +1,135 @@
+
 import { auth, db } from "./firebase.js";
+
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+import {
+  ref,
+  set
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const sphere = document.getElementById("sphere");
-  const authPanel = document.getElementById("auth-panel");
+  const $ = id => document.getElementById(id);
 
-  const loginTab = document.getElementById("loginTab");
-  const registerTab = document.getElementById("registerTab");
+  const loginTab = $("loginTab");
+  const registerTab = $("registerTab");
+  const loginForm = $("loginForm");
+  const registerForm = $("registerForm");
+  const authPanel = $("auth-panel");
+  const errorBox = $("error-message");
 
-  const loginForm = document.getElementById("loginForm");
-  const registerForm = document.getElementById("registerForm");
-
-  const loginEmail = document.getElementById("loginEmail");
-  const loginPassword = document.getElementById("loginPassword");
-
-  const regEmail = document.getElementById("regEmail");
-  const regPassword = document.getElementById("regPassword");
-  const roleSelect = document.getElementById("role");
-
-  const errorBox = document.getElementById("error-message");
-
-  sphere.onclick = () => authPanel.classList.add("show");
-
-  loginTab.onclick = () => {
-    loginTab.classList.add("active");
-    registerTab.classList.remove("active");
-    loginForm.classList.remove("hidden");
-    registerForm.classList.add("hidden");
-  };
-
-  registerTab.onclick = () => {
-    registerTab.classList.add("active");
-    loginTab.classList.remove("active");
-    registerForm.classList.remove("hidden");
-    loginForm.classList.add("hidden");
-  };
-
-  loginForm.onsubmit = async e => {
-    e.preventDefault();
-    clearError();
-
-    try {
-      await signInWithEmailAndPassword(
-        auth,
-        loginEmail.value,
-        loginPassword.value
-      );
-      location.href = "dashboard.html";
-    } catch (err) {
-      showError(err.message);
-    }
-  };
-
-  registerForm.onsubmit = async e => {
-    e.preventDefault();
-    clearError();
-
-    try {
-      const cred = await createUserWithEmailAndPassword(
-        auth,
-        regEmail.value,
-        regPassword.value
-      );
-
-      await set(ref(db, "users/" + cred.user.uid), {
-        email: regEmail.value,
-        role: roleSelect.value,
-        createdAt: Date.now()
-      });
-
-      location.href = "dashboard.html";
-    } catch (err) {
-      showError(err.message);
-    }
-  };
-
-  function showError(msg) {
-    if (msg.includes("invalid"))
-      errorBox.textContent = "Email ou mot de passe incorrect";
-    else if (msg.includes("already"))
-      errorBox.textContent = "Cet email est déjà utilisé";
-    else if (msg.includes("weak"))
-      errorBox.textContent = "Mot de passe trop faible";
-    else
-      errorBox.textContent = "Erreur inconnue";
-
+  function showError(message) {
+    errorBox.textContent = message;
     errorBox.classList.add("show");
   }
 
   function clearError() {
     errorBox.textContent = "";
     errorBox.classList.remove("show");
-  // === NEURAL CORE BOOT LOGIC ===
+  }
 
-const boot = document.getElementById("boot-screen");
-const authPanel = document.getElementById("auth-panel");
+  function switchTab(type) {
+    clearError();
 
-const l1 = document.getElementById("line1");
-const l2 = document.getElementById("line2");
+    const isLogin = type === "login";
 
-setTimeout(() => {
-  l1.textContent = "INITIALISATION…";
-}, 700);
+    loginTab.classList.toggle("active", isLogin);
+    registerTab.classList.toggle("active", !isLogin);
 
-setTimeout(() => {
-  l2.textContent = "NEURAL CORE SYNCHRONISÉ";
-}, 1500);
+    loginForm.classList.toggle("hidden", !isLogin);
+    registerForm.classList.toggle("hidden", isLogin);
+  }
 
-setTimeout(() => {
-  l1.textContent = "ACCÈS AUTORISÉ";
-  l2.textContent = "CLIQUEZ POUR ENTRER";
-  boot.classList.add("ready");
-}, 2600);
+  loginTab.addEventListener("click", () => switchTab("login"));
+  registerTab.addEventListener("click", () => switchTab("register"));
 
-boot.addEventListener("click", () => {
-  if (!boot.classList.contains("ready")) return;
+  $("sphere")?.addEventListener("click", () => {
+    authPanel.classList.add("show");
+  });
 
-  boot.style.animation = "bootOut 0.8s forwards";
-  setTimeout(() => {
-    boot.remove();
-    authPanel.classList.remove("hidden");
-  }, 700);
+  $("closeAuth")?.addEventListener("click", () => {
+    authPanel.classList.remove("show");
+  });
+
+  // LOGIN
+  loginForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    clearError();
+
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        $("loginEmail").value.trim(),
+        $("loginPassword").value
+      );
+
+      location.href = "dashboard.html";
+
+    } catch (error) {
+      console.error(error);
+      showError(getMessage(error));
+    }
+  });
+
+  // REGISTER
+  registerForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    clearError();
+
+    const email = $("regEmail").value.trim();
+    const password = $("regPassword").value;
+    const confirm = $("confirmPassword").value;
+
+    if (password.length < 6) {
+      showError("Пароль должен содержать минимум 6 символов");
+      return;
+    }
+
+    if (password !== confirm) {
+      showError("Пароли не совпадают");
+      return;
+    }
+
+    try {
+      const credential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await set(ref(db, "users/" + credential.user.uid), {
+        email,
+        role: "user",
+        createdAt: Date.now()
+      });
+
+      location.href = "dashboard.html";
+
+    } catch (error) {
+      console.error(error);
+      showError(getMessage(error));
+    }
+  });
+
+  function getMessage(error) {
+    const messages = {
+      "auth/invalid-email": "Неверный Email",
+      "auth/invalid-credential": "Неверный Email или пароль",
+      "auth/email-already-in-use": "Email уже зарегистрирован",
+      "auth/weak-password": "Слишком слабый пароль",
+      "auth/too-many-requests": "Слишком много попыток",
+      "auth/network-request-failed": "Проверь интернет-соединение",
+      "PERMISSION_DENIED": "Нет доступа к Firebase Database"
+    };
+
+    return messages[error.code] || "Ошибка: " + error.message;
+  }
+
+  console.log("K-NET AUTH READY");
 });
-
 
 
