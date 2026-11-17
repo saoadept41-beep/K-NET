@@ -1,64 +1,76 @@
 import { auth, db } from "./firebase.js";
-import { signOut, onAuthStateChanged } from 
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-import { 
-  collection, 
-  addDoc, 
-  onSnapshot, 
-  query, 
-  orderBy, 
-  serverTimestamp 
-} from 
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// db — это Realtime Database (getDatabase), поэтому Firestore здесь не работает
+import {
+  ref,
+  push,
+  query,
+  orderByChild,
+  onChildAdded,
+  off
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const logoutBtn = document.getElementById("logoutBtn");
-const messageForm = document.getElementById("messageForm");
+const sendForm = document.getElementById("sendForm");
 const messageInput = document.getElementById("messageInput");
 const messagesDiv = document.getElementById("messages");
 
-/* Проверка авторизации */
+let currentChat = "global";
+let currentQuery = null;
+
 onAuthStateChanged(auth, user => {
-  if (!user) {
-    window.location.href = "index.html";
-  }
+  if (!user) location.href = "index.html";
 });
 
-/* Logout */
-logoutBtn.onclick = () => {
-  signOut(auth);
-};
+logoutBtn.onclick = () => signOut(auth);
 
-/* Отправка сообщения */
-messageForm.onsubmit = async (e) => {
+/* Подписка на выбранный чат */
+function openChat(name) {
+  if (currentQuery) off(currentQuery);
+  currentChat = name;
+  messagesDiv.innerHTML = "";
+
+  currentQuery = query(ref(db, "messages/" + name), orderByChild("createdAt"));
+
+  onChildAdded(currentQuery, snap => {
+    const data = snap.val();
+    const div = document.createElement("div");
+    div.className = "message";
+
+    const author = document.createElement("strong");
+    author.textContent = data.user;          // textContent вместо innerHTML — защита от XSS
+    div.append(author, document.createElement("br"), data.text);
+
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  });
+}
+
+document.querySelectorAll(".nav-btn[data-chat]").forEach(btn =>
+  btn.addEventListener("click", () => openChat(btn.dataset.chat))
+);
+
+/* Отправка */
+sendForm.addEventListener("submit", async e => {
   e.preventDefault();
 
-  if (messageInput.value.trim() === "") return;
+  const text = messageInput.value.trim();
+  if (!text || !auth.currentUser) return;
 
-  await addDoc(collection(db, "messages"), {
-    text: messageInput.value,
+  await push(ref(db, "messages/" + currentChat), {
+    text,
     user: auth.currentUser.email,
-    createdAt: serverTimestamp()
+    createdAt: Date.now()
   });
 
   messageInput.value = "";
-};
-
-/* Загрузка сообщений в реальном времени */
-const q = query(collection(db, "messages"), orderBy("createdAt"));
-
-onSnapshot(q, snapshot => {
-  messagesDiv.innerHTML = "";
-
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    const div = document.createElement("div");
-    div.className = "message";
-    div.innerHTML = `<strong>${data.user}</strong><br>${data.text}`;
-    messagesDiv.appendChild(div);
-  });
-
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
+
+openChat("global");
 
 
